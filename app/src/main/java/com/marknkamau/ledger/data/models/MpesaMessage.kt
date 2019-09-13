@@ -31,8 +31,9 @@ data class MpesaMessage(val body: String, val date: Long) : Parcelable {
             return body.split("Ksh")[1].split(" ")[0].replace(",", "").toDouble()
         }
 
+    // TODO Use parcelize
     constructor(source: Parcel) : this(
-            source.readString(),
+            source.readString()!!,
             source.readLong()
     )
 

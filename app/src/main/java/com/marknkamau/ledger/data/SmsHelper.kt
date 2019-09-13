@@ -18,6 +18,8 @@ class SmsHelper {
         val returnList = mutableListOf<MpesaMessage>()
 
         val cursor = context.contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null)
+                ?: return returnList
+
         val bodyIndex = cursor.getColumnIndexOrThrow("body")
         val addressIndex = cursor.getColumnIndexOrThrow("address")
         val dateIndex = cursor.getColumnIndexOrThrow("date")

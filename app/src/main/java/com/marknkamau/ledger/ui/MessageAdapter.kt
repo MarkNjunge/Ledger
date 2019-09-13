@@ -2,16 +2,15 @@ package com.marknkamau.ledger.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.marknkamau.ledger.R
 import com.marknkamau.ledger.data.models.MpesaMessage
 import com.marknkamau.ledger.utils.DateTime
 import kotlinx.android.synthetic.main.item_message.view.*
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -42,7 +41,7 @@ class MessageAdapter(private val context: Context, private val onClick: (MpesaMe
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
-//            Timber.d(mpesaMessage.body)
+            //            Timber.d(mpesaMessage.body)
             val time = DateTime.fromTimestamp(mpesaMessage.date).format("HH:mm a")
             tvTime.text = time
             tvAmount.text = "Ksh. ${mpesaMessage.amount}"

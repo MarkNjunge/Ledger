@@ -1,9 +1,9 @@
 package com.marknkamau.ledger.ui
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.marknkamau.ledger.R
 import com.marknkamau.ledger.data.models.MpesaMessage
 import kotlinx.android.synthetic.main.activity_message.*
@@ -21,7 +21,7 @@ class MessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
 
-        mpesaMessage = intent.extras.get(MESSSAGE) as MpesaMessage
+        mpesaMessage = intent.extras!!.get(MESSSAGE) as MpesaMessage
 
         tvMessageCode.text = mpesaMessage.code
         tvMesageBody.text = mpesaMessage.body

@@ -3,24 +3,20 @@ package com.marknkamau.ledger.ui
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.marknkamau.ledger.R
-import com.marknkamau.ledger.R.id.rvGroups
 import com.marknkamau.ledger.data.SmsHelper
-import com.marknkamau.ledger.data.models.*
+import com.marknkamau.ledger.data.models.MessageGroup
+import com.marknkamau.ledger.data.models.MpesaMessage
 import com.marknkamau.ledger.utils.DateTime
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_group.view.*
-import timber.log.Timber
-import kotlin.collections.HashMap
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        rvGroups.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        rvGroups.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvGroups.addItemDecoration(DividerItemDecoration(this@MainActivity, LinearLayout.VERTICAL))
 
         adapter = GroupMessageAdapter(this@MainActivity) { message ->

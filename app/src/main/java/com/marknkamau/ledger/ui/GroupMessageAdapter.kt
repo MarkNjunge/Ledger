@@ -1,13 +1,11 @@
 package com.marknkamau.ledger.ui
 
 import android.content.Context
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.marknkamau.ledger.R
 import com.marknkamau.ledger.data.models.MessageGroup
 import com.marknkamau.ledger.data.models.MpesaMessage
@@ -21,7 +19,7 @@ import java.util.*
  * https://github.com/MarkNjunge
  */
 
-class GroupMessageAdapter(private val context: Context,  private val onClick: (MpesaMessage) -> Unit) : RecyclerView.Adapter<GroupMessageAdapter.ViewHolder>() {
+class GroupMessageAdapter(private val context: Context, private val onClick: (MpesaMessage) -> Unit) : RecyclerView.Adapter<GroupMessageAdapter.ViewHolder>() {
 
     private var data: List<MessageGroup> = ArrayList()
 
@@ -40,7 +38,7 @@ class GroupMessageAdapter(private val context: Context,  private val onClick: (M
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         fun bind(context: Context, item: MessageGroup, onClick: (MpesaMessage) -> Unit) = with(itemView) {
             val date = DateTime.fromTimestamp(item.date).format("EE, dd - MMM - YY")
             tvHeaderText.text = date
@@ -49,7 +47,7 @@ class GroupMessageAdapter(private val context: Context,  private val onClick: (M
             val messageAdapter = MessageAdapter(context, onClick)
             messageAdapter.setItems(item.messages)
 
-            rvMessages.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+            rvMessages.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             rvMessages.adapter = messageAdapter
         }
     }
