@@ -11,17 +11,17 @@ import kotlinx.android.synthetic.main.activity_message.*
 class MessageActivity : AppCompatActivity() {
 
     companion object {
-        val MESSSAGE = "message"
+        const val MESSAGE = "message"
     }
 
     private lateinit var mpesaMessage: MpesaMessage
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
 
-        mpesaMessage = intent.extras!!.get(MESSSAGE) as MpesaMessage
+        mpesaMessage = intent.extras!!.get(MESSAGE) as MpesaMessage
 
         tvMessageCode.text = mpesaMessage.code
         tvMesageBody.text = mpesaMessage.body

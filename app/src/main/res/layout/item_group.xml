@@ -35,14 +35,14 @@
 
             <!-- HEADER INDICATOR -->
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/headerIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_gravity="center_vertical|end"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,12 +53,12 @@
                 android:id="@+id/tvTransactions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:text="x transactions"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvHeaderText" />
+                app:layout_constraintTop_toBottomOf="@+id/tvHeaderText"
+                tools:text="x transactions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,19 +71,11 @@
 
         <!-- CONTENT -->
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMessages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#f9f9f9" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:background="#f9f9f9" />
 
     </com.github.florent37.expansionpanel.ExpansionLayout>
 </LinearLayout>

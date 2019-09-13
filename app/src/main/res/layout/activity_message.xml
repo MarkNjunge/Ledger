@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Ksh. 500"
+        tools:text="Ksh. 500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMesageBody" />
 </androidx.constraintlayout.widget.ConstraintLayout>

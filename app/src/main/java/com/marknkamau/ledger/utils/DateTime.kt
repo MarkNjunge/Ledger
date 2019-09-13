@@ -1,5 +1,6 @@
 package com.marknkamau.ledger.utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,4 +66,5 @@ fun Date.toDateTime(): DateTime {
     return DateTime(year, month, dayOfMonth, hourOfDay, minute, second, millisecond)
 }
 
+@SuppressLint("SimpleDateFormat")
 fun Date.format(pattern: String): String = SimpleDateFormat(pattern).format(this)

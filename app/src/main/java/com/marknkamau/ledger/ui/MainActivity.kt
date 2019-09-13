@@ -1,6 +1,7 @@
 package com.marknkamau.ledger.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
-        private lateinit var adapter: GroupMessageAdapter
+    private lateinit var adapter: GroupMessageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = GroupMessageAdapter(this@MainActivity) { message ->
             val i = Intent(this@MainActivity, MessageActivity::class.java)
-            i.putExtra(MessageActivity.MESSSAGE, message)
+            i.putExtra(MessageActivity.MESSAGE, message)
             startActivity(i)
         }
         rvGroups.adapter = adapter
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("UseSparseArrays")
     private fun groupByDate(messages: List<MpesaMessage>): MutableList<MessageGroup> {
         val treeMap = HashMap<Long, MutableList<MpesaMessage>>()
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.marknkamau.ledger.R
 import com.marknkamau.ledger.data.models.MessageGroup
@@ -38,7 +37,7 @@ class GroupMessageAdapter(private val context: Context, private val onClick: (Mp
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(context: Context, item: MessageGroup, onClick: (MpesaMessage) -> Unit) = with(itemView) {
             val date = DateTime.fromTimestamp(item.date).format("EE, dd - MMM - YY")
             tvHeaderText.text = date

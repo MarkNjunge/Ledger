@@ -1,5 +1,6 @@
 package com.marknkamau.ledger.data.models
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -12,6 +13,7 @@ data class MpesaMessage(val body: String, val date: Long) : Parcelable {
     val code = body.split(Regex("( [Cc]onfirmed)"))[0].reversed().substring(0, 10).reversed()
 
     val type: TransactionType
+        @SuppressLint("DefaultLocale")
         get() {
             return when {
                 body.toLowerCase().contains(Regex("(.*) reversal (.*)")) -> TransactionType.REVERSAL

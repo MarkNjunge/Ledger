@@ -9,7 +9,8 @@ import timber.log.Timber
  * https://github.com/MarkNjunge
  */
 
-class App : Application() {
+@Suppress("unused")
+class LedgerApp : Application() {
     override fun onCreate() {
         super.onCreate()
 

@@ -1,5 +1,6 @@
 package com.marknkamau.ledger.data
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import com.marknkamau.ledger.data.models.MpesaMessage
@@ -13,6 +14,7 @@ import com.marknkamau.ledger.data.models.TransactionType
  */
 
 class SmsHelper {
+    @SuppressLint("Recycle")
     fun getMpesaMessages(context: Context): MutableList<MpesaMessage> {
         val smsList = mutableListOf<Sms>()
         val returnList = mutableListOf<MpesaMessage>()
@@ -39,6 +41,7 @@ class SmsHelper {
         return compile(smsList)
     }
 
+    @SuppressLint("DefaultLocale")
     private fun compile(list: MutableList<Sms>): MutableList<MpesaMessage> {
         val messages = mutableListOf<MpesaMessage>()
 
