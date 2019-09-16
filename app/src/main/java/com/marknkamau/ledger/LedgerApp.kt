@@ -1,6 +1,9 @@
 package com.marknkamau.ledger
 
 import android.app.Application
+import com.marknkamau.ledger.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -19,5 +22,10 @@ class LedgerApp : Application() {
                 return "Timber/${element.fileName.substringBefore(".")}.${element.methodName}(Ln${element.lineNumber})"
             }
         })
+
+        startKoin {
+            androidContext(this@LedgerApp)
+            modules(appModule)
+        }
     }
 }

@@ -13,9 +13,9 @@ import com.marknkamau.ledger.data.models.TransactionType
  * https://github.com/MarkNjunge
  */
 
-class SmsHelper {
+class SmsHelper(private val context: Context) {
     @SuppressLint("Recycle")
-    fun getMpesaMessages(context: Context): MutableList<MpesaMessage> {
+    fun getMpesaMessages(): MutableList<MpesaMessage> {
         val smsList = mutableListOf<Sms>()
         val returnList = mutableListOf<MpesaMessage>()
 
