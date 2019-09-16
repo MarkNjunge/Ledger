@@ -42,7 +42,7 @@ class MessageAdapter(private val context: Context, private val onClick: (MpesaMe
         @SuppressLint("SetTextI18n")
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
             //            Timber.d(mpesaMessage.body)
-            val time = DateTime.fromTimestamp(mpesaMessage.date).format("HH:mm a")
+            val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format("HH:mm a")
             tvTime.text = time
             tvAmount.text = "Ksh. ${mpesaMessage.amount}"
             tvType.text = mpesaMessage.type.toString()

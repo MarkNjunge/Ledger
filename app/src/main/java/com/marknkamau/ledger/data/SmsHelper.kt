@@ -2,10 +2,9 @@ package com.marknkamau.ledger.data
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
+import android.provider.Telephony
 import com.marknkamau.ledger.data.models.MpesaMessage
 import com.marknkamau.ledger.data.models.Sms
-import com.marknkamau.ledger.data.models.TransactionType
 
 /**
  * Created by MarkNjunge.
@@ -14,44 +13,50 @@ import com.marknkamau.ledger.data.models.TransactionType
  */
 
 class SmsHelper(private val context: Context) {
+
     @SuppressLint("Recycle")
-    fun getMpesaMessages(): MutableList<MpesaMessage> {
-        val smsList = mutableListOf<Sms>()
-        val returnList = mutableListOf<MpesaMessage>()
+    private fun getRawMessages(): List<Sms> {
+        val messageList = mutableListOf<Sms>()
 
-        val cursor = context.contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null)
-                ?: return returnList
+        val messagesCursor =
+            context.contentResolver.query(
+                Telephony.Sms.Inbox.CONTENT_URI,
+                null,
+                null,
+                null,
+                Telephony.Sms.DEFAULT_SORT_ORDER
+            ) ?: throw RuntimeException("Unable to get messages")
 
-        val bodyIndex = cursor.getColumnIndexOrThrow("body")
-        val addressIndex = cursor.getColumnIndexOrThrow("address")
-        val dateIndex = cursor.getColumnIndexOrThrow("date")
+        val bodyIndex = messagesCursor.getColumnIndexOrThrow("body")
+        val addressIndex = messagesCursor.getColumnIndexOrThrow("address")
+        val dateIndex = messagesCursor.getColumnIndexOrThrow("date")
 
-        if (bodyIndex < 0 || !cursor.moveToFirst()) returnList
+        messagesCursor.moveToFirst()
         do {
-            val address = cursor.getString(addressIndex)
+            val address = messagesCursor.getString(addressIndex)
+            val date = messagesCursor.getString(dateIndex)
+
             if (address == "MPESA") {
-                val body = cursor.getString(bodyIndex)
-                val date = cursor.getString(dateIndex)
-                smsList.add(Sms(address, body, date.toLong()))
+                val body = messagesCursor.getString(bodyIndex)
+                messageList.add(Sms(address, body, date.toLong()))
             }
-        } while (cursor.moveToNext())
+        } while (messagesCursor.moveToNext())
 
-        cursor.close()
+        messagesCursor.close()
 
-        return compile(smsList)
+        return messageList
+    }
+
+    @SuppressLint("Recycle")
+    fun getMpesaMessages(): List<MpesaMessage> {
+        return compile(getRawMessages())
     }
 
     @SuppressLint("DefaultLocale")
-    private fun compile(list: MutableList<Sms>): MutableList<MpesaMessage> {
-        val messages = mutableListOf<MpesaMessage>()
-
-        list.filter { it.body.isNotEmpty() }
-                .forEach {
-                    // Remove messages than are not transactions
-                    if (it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")))
-                        messages.add(MpesaMessage(it.body, it.date))
-                }
-
-        return messages.filter { it.type != TransactionType.BALANCE }.toMutableList()
+    private fun compile(list: List<Sms>): List<MpesaMessage> {
+        return list.filter { it.body.isNotEmpty() }
+            // Remove messages than are not transactions
+            .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
+            .map { MpesaMessage(it.body) }
     }
 }

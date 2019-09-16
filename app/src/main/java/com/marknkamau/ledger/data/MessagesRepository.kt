@@ -6,13 +6,13 @@ import com.marknkamau.ledger.data.models.MpesaMessage
 import com.marknkamau.ledger.utils.DateTime
 
 interface MessagesRepository {
-    suspend fun getMessages(): MutableList<MpesaMessage>
+    suspend fun getMessages(): List<MpesaMessage>
 
-    suspend fun getMessagesGrouped(): MutableList<MessageGroup>
+    suspend fun getMessagesGrouped(): List<MessageGroup>
 }
 
 class MessagesRepositoryImpl(private val smsHelper: SmsHelper) : MessagesRepository {
-    override suspend fun getMessages(): MutableList<MpesaMessage> {
+    override suspend fun getMessages(): List<MpesaMessage> {
         return smsHelper.getMpesaMessages()
     }
 
@@ -26,9 +26,9 @@ class MessagesRepositoryImpl(private val smsHelper: SmsHelper) : MessagesReposit
 
         messages.forEach {
             // Reduce the date's accuracy to only up to the day of the month
-            val dateTime = DateTime.fromTimestamp(it.date)
+            val dateTime = DateTime.fromTimestamp(it.transactionDate)
             val bigDateTime =
-                DateTime(dateTime.year, dateTime.month, dateTime.dayOfMonth, 0, 0, 0, 0)
+                DateTime(dateTime.year, dateTime.month, dateTime.dayOfMonth, 0, 0, 0)
             val date = bigDateTime.timestamp
 
             // If the a messages does not exist for the date, create it
