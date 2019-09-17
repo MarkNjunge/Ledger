@@ -1,11 +1,11 @@
-package com.marknkamau.ledger.ui
+package com.marknjunge.ledger.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.marknkamau.ledger.R
-import com.marknkamau.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.R
+import com.marknjunge.ledger.data.models.MpesaMessage
 import kotlinx.android.synthetic.main.activity_message.*
 
 class MessageActivity : AppCompatActivity() {

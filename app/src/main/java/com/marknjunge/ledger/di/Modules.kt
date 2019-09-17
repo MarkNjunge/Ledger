@@ -1,9 +1,9 @@
-package com.marknkamau.ledger.di
+package com.marknjunge.ledger.di
 
-import com.marknkamau.ledger.data.MessagesRepository
-import com.marknkamau.ledger.data.MessagesRepositoryImpl
-import com.marknkamau.ledger.data.SmsHelper
-import com.marknkamau.ledger.ui.MainViewModel
+import com.marknjunge.ledger.data.MessagesRepository
+import com.marknjunge.ledger.data.MessagesRepositoryImpl
+import com.marknjunge.ledger.data.SmsHelper
+import com.marknjunge.ledger.ui.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

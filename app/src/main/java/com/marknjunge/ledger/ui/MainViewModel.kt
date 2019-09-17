@@ -1,11 +1,11 @@
-package com.marknkamau.ledger.ui
+package com.marknjunge.ledger.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marknkamau.ledger.data.MessagesRepository
-import com.marknkamau.ledger.data.models.MessageGroup
+import com.marknjunge.ledger.data.MessagesRepository
+import com.marknjunge.ledger.data.models.MessageGroup
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val messagesRepository: MessagesRepository) : ViewModel() {

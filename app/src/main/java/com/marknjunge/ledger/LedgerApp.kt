@@ -1,7 +1,7 @@
-package com.marknkamau.ledger
+package com.marknjunge.ledger
 
 import android.app.Application
-import com.marknkamau.ledger.di.appModule
+import com.marknjunge.ledger.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber

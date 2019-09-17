@@ -1,14 +1,14 @@
-package com.marknkamau.ledger.ui
+package com.marknjunge.ledger.ui
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.marknkamau.ledger.R
-import com.marknkamau.ledger.data.models.MessageGroup
-import com.marknkamau.ledger.data.models.MpesaMessage
-import com.marknkamau.ledger.utils.DateTime
+import com.marknjunge.ledger.R
+import com.marknjunge.ledger.data.models.MessageGroup
+import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.utils.DateTime
 import kotlinx.android.synthetic.main.item_group.view.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.marknkamau.ledger.ui
+package com.marknjunge.ledger.ui
 
 import android.Manifest
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.marknkamau.ledger.R
+import com.marknjunge.ledger.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

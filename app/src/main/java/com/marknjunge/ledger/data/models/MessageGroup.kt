@@ -1,4 +1,4 @@
-package com.marknkamau.ledger.data.models
+package com.marknjunge.ledger.data.models
 
 /**
  * Created by MarkNjunge.

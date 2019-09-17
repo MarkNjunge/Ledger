@@ -1,4 +1,4 @@
-package com.marknkamau.ledger.data.models
+package com.marknjunge.ledger.data.models
 
 enum class TransactionType(val positive: Boolean?) {
     REVERSAL(true),

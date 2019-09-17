@@ -1,10 +1,10 @@
-package com.marknkamau.ledger.data
+package com.marknjunge.ledger.data
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Telephony
-import com.marknkamau.ledger.data.models.MpesaMessage
-import com.marknkamau.ledger.data.models.Sms
+import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.data.models.Sms
 
 /**
  * Created by MarkNjunge.

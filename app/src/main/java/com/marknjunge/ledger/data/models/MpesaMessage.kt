@@ -1,8 +1,8 @@
-package com.marknkamau.ledger.data.models
+package com.marknjunge.ledger.data.models
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import com.marknkamau.ledger.utils.DateTime
+import com.marknjunge.ledger.utils.DateTime
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 

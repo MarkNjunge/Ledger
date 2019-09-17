@@ -1,4 +1,4 @@
-package com.marknkamau.ledger
+package com.marknjunge.ledger
 
 import org.junit.Test
 

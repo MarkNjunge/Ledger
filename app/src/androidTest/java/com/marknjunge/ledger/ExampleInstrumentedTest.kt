@@ -1,4 +1,4 @@
-package com.marknkamau.ledger
+package com.marknjunge.ledger
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -20,6 +20,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
 
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.marknkamau.ledger", appContext.packageName)
+        assertEquals("com.marknjunge.ledger", appContext.packageName)
     }
 }

@@ -1,9 +1,9 @@
-package com.marknkamau.ledger.data
+package com.marknjunge.ledger.data
 
 import android.annotation.SuppressLint
-import com.marknkamau.ledger.data.models.MessageGroup
-import com.marknkamau.ledger.data.models.MpesaMessage
-import com.marknkamau.ledger.utils.DateTime
+import com.marknjunge.ledger.data.models.MessageGroup
+import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.utils.DateTime
 
 interface MessagesRepository {
     suspend fun getMessages(): List<MpesaMessage>

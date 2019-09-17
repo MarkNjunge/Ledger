@@ -1,4 +1,4 @@
-package com.marknkamau.ledger.utils
+package com.marknjunge.ledger.utils
 
 import android.annotation.SuppressLint
 import java.lang.Exception
