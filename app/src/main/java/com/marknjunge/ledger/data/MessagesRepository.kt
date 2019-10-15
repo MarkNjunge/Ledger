@@ -4,20 +4,51 @@ import android.annotation.SuppressLint
 import com.marknjunge.ledger.data.models.MessageGroup
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.utils.DateTime
+import com.marknjunge.ledger.utils.LocalStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 interface MessagesRepository {
     suspend fun getMessages(): List<MpesaMessage>
 
     suspend fun getMessagesGrouped(): List<MessageGroup>
+
+    suspend fun exportAsCSV()
 }
 
-class MessagesRepositoryImpl(private val smsHelper: SmsHelper) : MessagesRepository {
+class MessagesRepositoryImpl(
+    private val smsHelper: SmsHelper,
+    private val storage: LocalStorage
+) : MessagesRepository {
+
     override suspend fun getMessages(): List<MpesaMessage> {
         return smsHelper.getMpesaMessages()
     }
 
     override suspend fun getMessagesGrouped(): MutableList<MessageGroup> {
-        return groupByDate(getMessages())
+        return withContext(Dispatchers.IO) {
+            groupByDate(getMessages())
+        }
+    }
+
+    override suspend fun exportAsCSV() {
+        withContext(Dispatchers.IO) {
+            val messages = smsHelper.getMpesaMessages()
+
+            val output = mutableListOf<String>()
+
+            output.add("type,code,amount,account_number,transaction_date")
+            messages.forEach {
+                output.add("${it.type.name},${it.code},${it.amount},${it.accountNumber},${it.transactionDate}")
+            }
+
+            if (storage.isExternal) {
+                storage.createFolder("ledger")
+                storage.writeToFile("ledger/transactions.csv", output.joinToString("\n"))
+            } else {
+                storage.writeToFile("transactions.csv", output.joinToString("\n"))
+            }
+        }
     }
 
     @SuppressLint("UseSparseArrays")

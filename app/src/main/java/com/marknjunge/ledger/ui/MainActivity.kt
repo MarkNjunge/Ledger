@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         initializeRecyclerView()
 
         readSms()
+
+        btnExport.setOnClickListener {
+            viewModel.exportAsCSV()
+            Toast.makeText(this, "Exporting to ledger/transactions.csv", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onResume() {

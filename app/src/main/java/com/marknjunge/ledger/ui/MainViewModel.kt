@@ -22,4 +22,12 @@ class MainViewModel(private val messagesRepository: MessagesRepository) : ViewMo
             _loading.value = false
         }
     }
+
+    fun exportAsCSV() {
+        viewModelScope.launch {
+            _loading.value = true
+            messagesRepository.exportAsCSV()
+            _loading.value = false
+        }
+    }
 }
