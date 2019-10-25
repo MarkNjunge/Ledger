@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -93,12 +94,18 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_WRITE_FILE) {
-            Timber.d(data?.data.toString())
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_WRITE_FILE && data != null) {
+                Timber.d(data.data.toString())
 
-            csvContent?.let {
-                val content = it.joinToString("\n").toByteArray()
-                SAFUtils.writeContent(contentResolver, data!!.data!!, content)
+                data.data?.let { uri ->
+                    csvContent?.let {
+                        val content = it.joinToString("\n").toByteArray()
+                        SAFUtils.writeContent(contentResolver, uri, content)
+
+                        Toast.makeText(this, "Transactons exported", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
