@@ -11,6 +11,6 @@ import org.koin.dsl.module
 
 val appModule = module {
     single { SmsHelper(androidContext()) }
-    single<MessagesRepository> { MessagesRepositoryImpl(get(), LocalStorage.getExternal(androidContext())) }
+    single<MessagesRepository> { MessagesRepositoryImpl(get()) }
     viewModel { MainViewModel(get()) }
 }

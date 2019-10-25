@@ -1,12 +1,12 @@
 package com.marknjunge.ledger.ui
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,13 +15,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.utils.SAFUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
+    private val REQUEST_WRITE_FILE: Int = 43
     private val viewModel: MainViewModel by viewModel()
+    private var csvContent: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +38,11 @@ class MainActivity : AppCompatActivity() {
         readSms()
 
         btnExport.setOnClickListener {
-            viewModel.exportAsCSV()
-            Toast.makeText(this, "Exporting to ledger/transactions.csv", Toast.LENGTH_LONG).show()
+            viewModel.getMessagesForCsv().observe(this, Observer { csvContent ->
+                this.csvContent = csvContent
+                val intent = SAFUtils.getIntent("text/csv", "M-Pesa Transactions.csv")
+                startActivityForResult(intent, REQUEST_WRITE_FILE)
+            })
         }
     }
 
@@ -61,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
         rvGroups.adapter = adapter
 
-        viewModel.messages.observe(this, Observer { items ->
+        viewModel.groupedMessages.observe(this, Observer { items ->
             adapter.setItems(items)
         })
     }
@@ -79,6 +87,19 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             viewModel.getMessages()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_WRITE_FILE) {
+            Timber.d(data?.data.toString())
+
+            csvContent?.let {
+                val content = it.joinToString("\n").toByteArray()
+                SAFUtils.writeContent(contentResolver, data!!.data!!, content)
+            }
         }
     }
 

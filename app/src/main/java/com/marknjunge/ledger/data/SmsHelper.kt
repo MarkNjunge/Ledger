@@ -25,7 +25,7 @@ class SmsHelper(private val context: Context) {
                 null,
                 null,
                 Telephony.Sms.DEFAULT_SORT_ORDER
-            ) ?: throw RuntimeException("Unable to get messages")
+            ) ?: throw RuntimeException("Unable to get groupedMessages")
 
         val bodyIndex = messagesCursor.getColumnIndexOrThrow("body")
         val addressIndex = messagesCursor.getColumnIndexOrThrow("address")
@@ -55,7 +55,7 @@ class SmsHelper(private val context: Context) {
     @SuppressLint("DefaultLocale")
     private fun compile(list: List<Sms>): List<MpesaMessage> {
         return list.filter { it.body.isNotEmpty() }
-            // Remove messages than are not transactions
+            // Remove groupedMessages than are not transactions
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
             .map { MpesaMessage(it.body) }
     }

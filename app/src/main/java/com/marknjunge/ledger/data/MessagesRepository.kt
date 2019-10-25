@@ -12,13 +12,10 @@ interface MessagesRepository {
     suspend fun getMessages(): List<MpesaMessage>
 
     suspend fun getMessagesGrouped(): List<MessageGroup>
-
-    suspend fun exportAsCSV()
 }
 
 class MessagesRepositoryImpl(
-    private val smsHelper: SmsHelper,
-    private val storage: LocalStorage
+    private val smsHelper: SmsHelper
 ) : MessagesRepository {
 
     override suspend fun getMessages(): List<MpesaMessage> {
@@ -28,26 +25,6 @@ class MessagesRepositoryImpl(
     override suspend fun getMessagesGrouped(): MutableList<MessageGroup> {
         return withContext(Dispatchers.IO) {
             groupByDate(getMessages())
-        }
-    }
-
-    override suspend fun exportAsCSV() {
-        withContext(Dispatchers.IO) {
-            val messages = smsHelper.getMpesaMessages()
-
-            val output = mutableListOf<String>()
-
-            output.add("type,code,amount,account_number,transaction_date")
-            messages.forEach {
-                output.add("${it.type.name},${it.code},${it.amount},${it.accountNumber},${it.transactionDate}")
-            }
-
-            if (storage.isExternal) {
-                storage.createFolder("ledger")
-                storage.writeToFile("ledger/transactions.csv", output.joinToString("\n"))
-            } else {
-                storage.writeToFile("transactions.csv", output.joinToString("\n"))
-            }
         }
     }
 
@@ -62,16 +39,16 @@ class MessagesRepositoryImpl(
                 DateTime(dateTime.year, dateTime.month, dateTime.dayOfMonth, 0, 0, 0)
             val date = bigDateTime.timestamp
 
-            // If the a messages does not exist for the date, create it
+            // If the a groupedMessages does not exist for the date, create it
             if (treeMap[date] == null) {
                 treeMap[date] = mutableListOf()
             }
 
-            // Add the message to the messages
+            // Add the message to the groupedMessages
             treeMap[date]!!.add(it)
         }
 
-        // Create a list of messages from the map
+        // Create a list of groupedMessages from the map
         val list = mutableListOf<MessageGroup>()
         for (key in treeMap.keys) {
             list.add(MessageGroup(key, treeMap[key]!!))
