@@ -45,17 +45,17 @@ class MainActivity : AppCompatActivity() {
                 startActivityForResult(intent, REQUEST_WRITE_FILE)
             })
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         readSms()
+
+        refreshLayout.setOnRefreshListener {
+            readSms()
+        }
     }
 
     private fun initializeLoading() {
         viewModel.loading.observe(this, Observer { loading ->
-            progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+            refreshLayout.isRefreshing = loading
         })
     }
 
