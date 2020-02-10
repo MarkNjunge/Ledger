@@ -126,4 +126,18 @@ class MpesaMessageTest {
         Assert.assertEquals(1567665300, balanceMsg.transactionDate)
         Assert.assertEquals(1372831620, depositMsg.transactionDate)
     }
+
+    @Test
+    fun `can get balance`() {
+        Assert.assertEquals(2944.98, reversalMsg.balance, 0.0)
+        Assert.assertEquals(2278.98, sendMsg.balance, 0.0)
+        Assert.assertEquals(3143.98, payBillMsg.balance, 0.0)
+        Assert.assertEquals(703.75, buyGoodsMsg.balance, 0.0)
+        Assert.assertEquals(2000.98, withdrawMsg.balance, 0.0)
+        Assert.assertEquals(4827.98, receiveMsg.balance, 0.0)
+        Assert.assertEquals(4822.98, receiveMsgAlt.balance, 0.0)
+        Assert.assertEquals(2744.98, airtimeMessage.balance, 0.0)
+        Assert.assertEquals(2992.98, balanceMsg.balance, 0.0)
+        Assert.assertEquals(1338.00, depositMsg.balance, 0.0)
+    }
 }
