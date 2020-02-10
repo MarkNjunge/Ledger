@@ -3,7 +3,6 @@ package com.marknjunge.ledger.data.models
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import com.marknjunge.ledger.utils.DateTime
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -12,17 +11,23 @@ import kotlinx.android.parcel.Parcelize
  * https://github.com/MarkNjunge
  */
 @Parcelize
-data class MpesaMessage(val body: String) : Parcelable {
-    @IgnoredOnParcel
-    val code = body.split(Regex("( [Cc]onfirmed)"))[0].reversed().split(" ")[0].reversed()
+data class MpesaMessage(
+    val body: String,
+    val code: String,
+    val transactionType: TransactionType,
+    val amount: Double,
+    val accountNumber: String?,
+    val transactionDate: Long
+) : Parcelable {
 
-    @IgnoredOnParcel
-    @SuppressLint("DefaultLocale")
-    val bodyLowerCase = body.toLowerCase()
+    companion object {
+        @SuppressLint("DefaultLocale")
+        fun create(body: String): MpesaMessage {
+            val code = body.split(Regex("( [Cc]onfirmed)"))[0].reversed().split(" ")[0].reversed()
 
-    val type: TransactionType
-        get() {
-            return when {
+            val bodyLowerCase = body.toLowerCase()
+
+            val transactionType = when {
                 bodyLowerCase.contains(Regex("(.*) reversal (.*)")) -> TransactionType.REVERSAL
                 bodyLowerCase.contains(Regex("(.*) sent to (.*) for account (.*)")) -> TransactionType.PAY_BILL
                 bodyLowerCase.contains(Regex("(.*) paid to")) -> TransactionType.BUY_GOODS
@@ -34,16 +39,10 @@ data class MpesaMessage(val body: String) : Parcelable {
                 bodyLowerCase.contains(Regex("(.*) give (.*)")) -> TransactionType.DEPOSIT
                 else -> TransactionType.UNKNOWN
             }
-        }
 
-    val amount: Double
-        get() {
-            return body.split("Ksh")[1].split(" ")[0].replace(",", "").toDouble()
-        }
+            val amount = body.split("Ksh")[1].split(" ")[0].replace(",", "").toDouble()
 
-    val accountNumber: String?
-        get() {
-            return when (type) {
+            val accountNumber = when (transactionType) {
                 TransactionType.REVERSAL -> null
                 TransactionType.SEND -> bodyLowerCase.split("to ")[1].split(" on")[0]
                 TransactionType.PAY_BILL -> bodyLowerCase.split("to ")[1].split(" on")[0]
@@ -55,22 +54,49 @@ data class MpesaMessage(val body: String) : Parcelable {
                 TransactionType.DEPOSIT -> bodyLowerCase.split("to ")[1].split(" new")[0]
                 TransactionType.UNKNOWN -> null
             }
-        }
 
-    val transactionDate: Long
-        get() {
-            return when (type) {
-                TransactionType.REVERSAL -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(" and")[0].replace("at", "")).timestamp
-                TransactionType.SEND -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")).timestamp
-                TransactionType.PAY_BILL -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(" new")[0].replace("at", "")).timestamp
-                TransactionType.BUY_GOODS -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")).timestamp
-                TransactionType.WITHDRAW -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split("on ")[1].split("withdraw")[0].replace("at", "")).timestamp
-                TransactionType.RECEIVE -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")).timestamp
-                TransactionType.AIRTIME -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")).timestamp
-                TransactionType.BALANCE -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")).timestamp
-                TransactionType.DEPOSIT -> DateTime.parse("d/M/yy  h:mm a", bodyLowerCase.split(" on ")[1].split(" give")[0].replace("at", "")).timestamp
+            val transationDate = when (transactionType) {
+                TransactionType.REVERSAL -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(" and")[0].replace("at", "")
+                ).timestamp
+                TransactionType.SEND -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                ).timestamp
+                TransactionType.PAY_BILL -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(" new")[0].replace("at", "")
+                ).timestamp
+                TransactionType.BUY_GOODS -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                ).timestamp
+                TransactionType.WITHDRAW -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split("on ")[1].split("withdraw")[0].replace("at", "")
+                ).timestamp
+                TransactionType.RECEIVE -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                ).timestamp
+                TransactionType.AIRTIME -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                ).timestamp
+                TransactionType.BALANCE -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                ).timestamp
+                TransactionType.DEPOSIT -> DateTime.parse(
+                    "d/M/yy  h:mm a",
+                    bodyLowerCase.split(" on ")[1].split(" give")[0].replace("at", "")
+                ).timestamp
                 TransactionType.UNKNOWN -> 0
             }
+
+            return MpesaMessage(body, code, transactionType, amount, accountNumber, transationDate)
         }
+    }
 
 }

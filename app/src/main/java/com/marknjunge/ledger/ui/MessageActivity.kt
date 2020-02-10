@@ -25,9 +25,9 @@ class MessageActivity : AppCompatActivity() {
 
         tvMessageCode.text = mpesaMessage.code
         tvMesageBody.text = mpesaMessage.body
-        tvTransactionType.text = mpesaMessage.type.name.capitalize()
+        tvTransactionType.text = mpesaMessage.transactionType.name.capitalize()
         tvAmount.text = "Ksh. ${mpesaMessage.amount}"
-        mpesaMessage.type.positive?.let {
+        mpesaMessage.transactionType.positive?.let {
             val i = if (it) {
                 ContextCompat.getColor(this@MessageActivity, R.color.positiveValue)
             } else {

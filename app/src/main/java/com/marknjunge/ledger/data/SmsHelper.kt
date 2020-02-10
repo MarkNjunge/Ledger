@@ -57,6 +57,6 @@ class SmsHelper(private val context: Context) {
         return list.filter { it.body.isNotEmpty() }
             // Remove groupedMessages than are not transactions
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
-            .map { MpesaMessage(it.body) }
+            .map { MpesaMessage.create(it.body) }
     }
 }

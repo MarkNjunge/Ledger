@@ -45,8 +45,8 @@ class MessageAdapter(private val context: Context, private val onClick: (MpesaMe
             val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format("HH:mm a")
             tvTime.text = time
             tvAmount.text = "Ksh. ${mpesaMessage.amount}"
-            tvType.text = mpesaMessage.type.toString()
-            mpesaMessage.type.positive?.let {
+            tvType.text = mpesaMessage.transactionType.toString()
+            mpesaMessage.transactionType.positive?.let {
                 val i = if (it) {
                     ContextCompat.getColor(context, R.color.positiveValue)
                 } else {

@@ -11,7 +11,7 @@ object CsvUtils {
 
             output.add("type,code,amount,account_number,transaction_date")
             messages.forEach {
-                output.add("${it.type.name},${it.code},${it.amount},${it.accountNumber},${it.transactionDate}")
+                output.add("${it.transactionType.name},${it.code},${it.amount},${it.accountNumber},${it.transactionDate}")
             }
 
             output
