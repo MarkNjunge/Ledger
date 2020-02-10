@@ -41,7 +41,6 @@ class MessageAdapter(private val context: Context, private val onClick: (MpesaMe
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
-            //            Timber.d(mpesaMessage.body)
             val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format("HH:mm a")
             tvTime.text = time
             tvAmount.text = "Ksh. ${mpesaMessage.amount}"

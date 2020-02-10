@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.SAFUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         btnExport.setOnClickListener {
             viewModel.getMessagesForCsv().observe(this, Observer { csvContent ->
                 this.csvContent = csvContent
-                val intent = SAFUtils.getIntent("text/csv", "M-Pesa Transactions.csv")
+                val intent = SAFUtils.getIntent("text/csv", "M-Pesa Transactions ${DateTime.now.format("yyyy-MM-dd HH:mm")}.csv")
                 startActivityForResult(intent, REQUEST_WRITE_FILE)
             })
         }

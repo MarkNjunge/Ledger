@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import com.marknjunge.ledger.data.models.MessageGroup
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.utils.DateTime
-import com.marknjunge.ledger.utils.LocalStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

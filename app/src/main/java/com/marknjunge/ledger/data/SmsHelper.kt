@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.Telephony
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.data.models.Sms
+import timber.log.Timber
 
 /**
  * Created by MarkNjunge.
@@ -25,7 +26,7 @@ class SmsHelper(private val context: Context) {
                 null,
                 null,
                 Telephony.Sms.DEFAULT_SORT_ORDER
-            ) ?: throw RuntimeException("Unable to get groupedMessages")
+            ) ?: throw RuntimeException("Unable to get messages")
 
         val bodyIndex = messagesCursor.getColumnIndexOrThrow("body")
         val addressIndex = messagesCursor.getColumnIndexOrThrow("address")
@@ -47,15 +48,11 @@ class SmsHelper(private val context: Context) {
         return messageList
     }
 
-    @SuppressLint("Recycle")
-    fun getMpesaMessages(): List<MpesaMessage> {
-        return compile(getRawMessages())
-    }
-
     @SuppressLint("DefaultLocale")
-    private fun compile(list: List<Sms>): List<MpesaMessage> {
-        return list.filter { it.body.isNotEmpty() }
-            // Remove groupedMessages than are not transactions
+    fun getMpesaMessages(): List<MpesaMessage> {
+        return getRawMessages()
+            .filter { it.body.isNotEmpty() }
+            // Remove messages than are not transactions. e.g. failed, insufficient transaction
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
             .map { MpesaMessage.create(it.body) }
     }

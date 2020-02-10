@@ -30,14 +30,7 @@ class MainViewModel(private val messagesRepository: MessagesRepository) : ViewMo
         viewModelScope.launch {
             _loading.value = true
             val messages = messagesRepository.getMessages()
-            val csvContent = CsvUtils.generateCsv(messages)
-            livedata.value = csvContent
-//            if (storage.isExternal) {
-//                storage.createFolder("ledger")
-//                storage.writeToFile("ledger/transactions.csv", output.joinToString("\n"))
-//            } else {
-//                storage.writeToFile("transactions.csv", output.joinToString("\n"))
-//            }
+            livedata.value = CsvUtils.generateCsv(messages)
             _loading.value = false
         }
 
