@@ -9,9 +9,12 @@ object CsvUtils {
         withContext(Dispatchers.IO) {
             val output = mutableListOf<String>()
 
-            output.add("type,code,amount,account_number,transaction_date")
+            output.add("type,code,amount,transaction_cost,account_number,transaction_date,balance")
             messages.forEach {
-                output.add("${it.transactionType.name},${it.code},${it.amount},${it.accountNumber},${it.transactionDate}")
+                output.add(
+                    "${it.transactionType.name},${it.code},${it.amount},${it.transactionCost},${it.accountNumber
+                        ?: ""},${it.transactionDate},${it.balance}"
+                )
             }
 
             output
