@@ -103,7 +103,7 @@ data class MpesaMessage(
                 TransactionType.PAY_BILL -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(",", "").toDouble()
                 TransactionType.BUY_GOODS -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(",", "").toDouble()
                 TransactionType.WITHDRAW -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(",", "").toDouble()
-                TransactionType.RECEIVE -> body.split("balance is Ksh")[1].split(". Buy goods")[0].replace(",", "").toDouble()
+                TransactionType.RECEIVE -> body.split("balance is Ksh")[1].split(". ")[0].replace(",", "").toDouble()
                 TransactionType.AIRTIME -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(",", "").toDouble()
                 TransactionType.BALANCE -> body.split("balance was  Ksh")[1].split("  on")[0].replace(",", "").toDouble()
                 TransactionType.DEPOSIT -> body.split("balance is Ksh")[1].replace(",", "").toDouble()
@@ -112,7 +112,7 @@ data class MpesaMessage(
 
             val transactionCost = when (transactionType) {
                 TransactionType.REVERSAL -> 0.0
-                TransactionType.SEND -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
+                TransactionType.SEND -> body.split("Transaction cost, Ksh")[1].split(".")[0].replace(",", "").toDouble()
                 TransactionType.PAY_BILL -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
                 TransactionType.BUY_GOODS -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
                 TransactionType.WITHDRAW -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
