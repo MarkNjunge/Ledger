@@ -140,4 +140,18 @@ class MpesaMessageTest {
         Assert.assertEquals(2992.98, balanceMsg.balance, 0.0)
         Assert.assertEquals(1338.00, depositMsg.balance, 0.0)
     }
+
+    @Test
+    fun `can get transaction cost`() {
+        Assert.assertEquals(0.0, reversalMsg.transactionCost, 0.0)
+        Assert.assertEquals(15.0, sendMsg.transactionCost, 0.0)
+        Assert.assertEquals(34.0, payBillMsg.transactionCost, 0.0)
+        Assert.assertEquals(0.0, buyGoodsMsg.transactionCost, 0.0)
+        Assert.assertEquals(28.0, withdrawMsg.transactionCost, 0.0)
+        Assert.assertEquals(0.0, receiveMsg.transactionCost, 0.0)
+        Assert.assertEquals(0.0, receiveMsgAlt.transactionCost, 0.0)
+        Assert.assertEquals(0.0, airtimeMessage.transactionCost, 0.0)
+        Assert.assertEquals(0.0, balanceMsg.transactionCost, 0.0)
+        Assert.assertEquals(0.00, depositMsg.transactionCost, 0.0)
+    }
 }

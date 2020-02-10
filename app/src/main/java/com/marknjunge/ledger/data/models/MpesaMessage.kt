@@ -18,7 +18,8 @@ data class MpesaMessage(
     val amount: Double,
     val accountNumber: String?,
     val transactionDate: Long,
-    val balance: Double
+    val balance: Double,
+    val transactionCost: Double
 ) : Parcelable {
 
     companion object {
@@ -109,7 +110,20 @@ data class MpesaMessage(
                 TransactionType.UNKNOWN -> 0.0
             }
 
-            return MpesaMessage(body, code, transactionType, amount, accountNumber, transationDate, balance)
+            val transactionCost = when (transactionType) {
+                TransactionType.REVERSAL -> 0.0
+                TransactionType.SEND -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
+                TransactionType.PAY_BILL -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
+                TransactionType.BUY_GOODS -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
+                TransactionType.WITHDRAW -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(",", "").toDouble()
+                TransactionType.RECEIVE -> 0.0
+                TransactionType.AIRTIME -> body.split("Transaction cost, Ksh")[1].split(".")[0].replace(",", "").toDouble()
+                TransactionType.BALANCE -> 0.0
+                TransactionType.DEPOSIT -> 0.0
+                TransactionType.UNKNOWN -> 0.0
+            }
+
+            return MpesaMessage(body, code, transactionType, amount, accountNumber, transationDate, balance, transactionCost)
         }
     }
 
