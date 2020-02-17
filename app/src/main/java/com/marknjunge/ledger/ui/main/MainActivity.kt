@@ -1,11 +1,10 @@
-package com.marknjunge.ledger.ui
+package com.marknjunge.ledger.ui.main
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +15,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.ui.detail.MessageActivity
+import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.SAFUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,21 +42,18 @@ class MainActivity : AppCompatActivity() {
         btnExport.setOnClickListener {
             viewModel.getMessagesForCsv().observe(this, Observer { csvContent ->
                 this.csvContent = csvContent
-                val intent = SAFUtils.getIntent("text/csv", "M-Pesa Transactions ${DateTime.now.format("yyyy-MM-dd HH:mm")}.csv")
+                val intent =
+                    SAFUtils.getIntent("text/csv", "M-Pesa Transactions ${DateTime.now.format("yyyy-MM-dd HH:mm")}.csv")
                 startActivityForResult(intent, REQUEST_WRITE_FILE)
             })
         }
 
         readSms()
-
-        refreshLayout.setOnRefreshListener {
-            readSms()
-        }
     }
 
     private fun initializeLoading() {
         viewModel.loading.observe(this, Observer { loading ->
-            refreshLayout.isRefreshing = loading
+            //            refreshLayout.isRefreshing = loading
         })
     }
 
@@ -64,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         rvGroups.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvGroups.addItemDecoration(DividerItemDecoration(this@MainActivity, LinearLayout.VERTICAL))
 
-        val adapter = GroupMessageAdapter(this@MainActivity) { message ->
+        val adapter = TransactionAdapter(this@MainActivity) { message ->
             val i = Intent(this@MainActivity, MessageActivity::class.java)
             i.putExtra(MessageActivity.MESSAGE, message)
             startActivity(i)
@@ -72,7 +69,8 @@ class MainActivity : AppCompatActivity() {
         rvGroups.adapter = adapter
 
         viewModel.groupedMessages.observe(this, Observer { items ->
-            adapter.setItems(items)
+            tvBalance.text = CurrencyFormatter.format(items.first().balance)
+            adapter.setItems(items.take(4))
         })
     }
 

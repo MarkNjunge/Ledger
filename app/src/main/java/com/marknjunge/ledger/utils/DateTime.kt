@@ -34,7 +34,7 @@ data class DateTime(
         @SuppressLint("SimpleDateFormat")
         fun parse(format: String, source: String): DateTime =
             SimpleDateFormat(format).parse(source)?.toDateTime()
-                ?: throw Exception("Source does not match format")
+                ?: throw Exception("Source does not match string")
     }
 
     /**
@@ -55,7 +55,7 @@ data class DateTime(
         }
 
     /**
-     * Formats the dateTime as the given format
+     * Formats the dateTime as the given string
      */
     fun format(format: String): String {
         val now = Calendar.getInstance()
@@ -86,7 +86,7 @@ fun Date.toDateTime(): DateTime {
 }
 
 /**
- * Helper function to format dates.
+ * Helper function to string dates.
  */
 @SuppressLint("SimpleDateFormat")
 fun Date.format(pattern: String): String = SimpleDateFormat(pattern).format(this)

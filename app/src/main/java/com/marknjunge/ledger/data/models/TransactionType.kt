@@ -1,5 +1,7 @@
 package com.marknjunge.ledger.data.models
 
+import android.annotation.SuppressLint
+
 enum class TransactionType(val positive: Boolean?) {
     REVERSAL(true),
     SEND(false),
@@ -10,5 +12,8 @@ enum class TransactionType(val positive: Boolean?) {
     AIRTIME(false),
     BALANCE(null),
     DEPOSIT(true),
-    UNKNOWN(null)
+    UNKNOWN(null);
+
+    @SuppressLint("DefaultLocale")
+    fun string() = this.name.replace("_", " ").toLowerCase().split(" ").joinToString("") {it.capitalize()}
 }

@@ -1,4 +1,4 @@
-package com.marknjunge.ledger.ui
+package com.marknjunge.ledger.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -29,9 +29,9 @@ class MessageActivity : AppCompatActivity() {
         tvAmount.text = "Ksh. ${mpesaMessage.amount}"
         mpesaMessage.transactionType.positive?.let {
             val i = if (it) {
-                ContextCompat.getColor(this@MessageActivity, R.color.positiveValue)
+                ContextCompat.getColor(this@MessageActivity, R.color.colorPositiveValue)
             } else {
-                ContextCompat.getColor(this@MessageActivity, R.color.negativeValue)
+                ContextCompat.getColor(this@MessageActivity, R.color.colorNegativeValue)
             }
             tvTransactionType.setTextColor(i)
         }

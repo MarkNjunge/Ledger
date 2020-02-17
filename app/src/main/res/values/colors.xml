@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="positiveValue">#4CAF50</color>
-    <color name="negativeValue">#f44336</color>
+    <color name="colorPrimary">#3B3C46</color>
+    <color name="colorPrimaryDark">#3B3C46</color>
+    <color name="colorAccent">#F47500</color>
+    <color name="colorPositiveValue">#31B75E</color>
+    <color name="colorNegativeValue">#C93636</color>
+    <color name="colorTextPrimary">#3B3C46</color>
+    <color name="colorTextSecondary">#74757C</color>
 </resources>
