@@ -64,107 +64,143 @@ data class MpesaMessage(
                 }
 
                 val transationDate = when (transactionType) {
-                    TransactionType.REVERSAL -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(" and")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.SEND -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.PAY_BILL -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(" new")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.BUY_GOODS -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.WITHDRAW -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split("on ")[1].split("withdraw")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.RECEIVE -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.AIRTIME -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.AIRTIME_RECEIVE -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.BALANCE -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
-                    ).timestamp
-                    TransactionType.DEPOSIT -> DateTime.parse(
-                        "d/M/yy  h:mm a",
-                        bodyLowerCase.split(" on ")[1].split(" give")[0].replace("at", "")
-                    ).timestamp
+                    TransactionType.REVERSAL -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(" and")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.SEND -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.PAY_BILL -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(" new")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.BUY_GOODS -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.WITHDRAW -> {
+                        val source = bodyLowerCase.split("on ")[1].split("withdraw")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.RECEIVE -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.AIRTIME -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.AIRTIME_RECEIVE -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.BALANCE -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
+                    TransactionType.DEPOSIT -> {
+                        val source = bodyLowerCase.split(" on ")[1].split(" give")[0].replace("at", "")
+                        DateTime.parse("d/M/yy  h:mm a", source).timestamp
+                    }
                     TransactionType.UNKNOWN -> 0
                 }
 
                 val balance = when (transactionType) {
-                    TransactionType.REVERSAL -> body.split("balance is Ksh")[1].dropLast(1).replace(",", "").toDouble()
-                    TransactionType.SEND -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.PAY_BILL -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.BUY_GOODS -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.WITHDRAW -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.RECEIVE -> body.split("balance is Ksh")[1].split(". ")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.AIRTIME -> body.split("balance is Ksh")[1].split(". Transaction cost")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
+                    TransactionType.REVERSAL -> {
+                        body.split("balance is Ksh")[1]
+                            .dropLast(1)
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.SEND -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". Transaction cost")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.PAY_BILL -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". Transaction cost")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.BUY_GOODS -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". Transaction cost")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.WITHDRAW -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". Transaction cost")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.RECEIVE -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". ")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.AIRTIME -> {
+                        body.split("balance is Ksh")[1]
+                            .split(". Transaction cost")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
                     TransactionType.AIRTIME_RECEIVE -> 0.0
-                    TransactionType.BALANCE -> body.split("balance was  Ksh")[1].split("  on")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.DEPOSIT -> body.split("balance is Ksh")[1].split(".")[0].replace(",", "").toDouble()
+                    TransactionType.BALANCE -> {
+                        body.split("balance was  Ksh")[1]
+                            .split("  on")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.DEPOSIT -> {
+                        body.split("balance is Ksh")[1]
+                            .split(".")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
                     TransactionType.UNKNOWN -> 0.0
                 }
 
                 val transactionCost = when (transactionType) {
-                    TransactionType.REVERSAL -> 0.0
-                    TransactionType.SEND -> body.split("Transaction cost, Ksh")[1].split(".")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.PAY_BILL -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.BUY_GOODS -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(
-                        ",",
-                        ""
-                    ).toDouble()
-                    TransactionType.WITHDRAW -> body.split("Transaction cost, Ksh")[1].dropLast(1).replace(
-                        ",",
-                        ""
-                    ).toDouble()
+                    TransactionType.REVERSAL -> {
+                        0.0
+                    }
+                    TransactionType.SEND -> {
+                        body.split("Transaction cost, Ksh")[1]
+                            .split(".")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.PAY_BILL -> {
+                        body.split("Transaction cost, Ksh")[1]
+                            .dropLast(1)
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.BUY_GOODS -> {
+                        body.split("Transaction cost, Ksh")[1]
+                            .dropLast(1)
+                            .replace(",", "")
+                            .toDouble()
+                    }
+                    TransactionType.WITHDRAW -> {
+                        body.split("Transaction cost, Ksh")[1]
+                            .dropLast(1)
+                            .replace(",", "")
+                            .toDouble()
+                    }
                     TransactionType.RECEIVE -> 0.0
-                    TransactionType.AIRTIME -> body.split("Transaction cost, Ksh")[1].split(".")[0].replace(
-                        ",",
-                        ""
-                    ).toDouble()
+                    TransactionType.AIRTIME -> {
+                        body.split("Transaction cost, Ksh")[1]
+                            .split(".")[0]
+                            .replace(",", "")
+                            .toDouble()
+                    }
                     TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> 0.0
                     TransactionType.DEPOSIT -> 0.0
