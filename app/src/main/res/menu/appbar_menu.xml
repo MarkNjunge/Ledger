@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_export"
+        android:title="Export as CSV"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/menu_settings"
-        android:icon="@drawable/ic_menu"
         android:title="Settings"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

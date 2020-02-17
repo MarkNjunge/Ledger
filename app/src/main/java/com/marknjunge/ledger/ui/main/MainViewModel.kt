@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.data.models.MpesaMessage
-import com.marknjunge.ledger.utils.CsvUtils
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val messagesRepository: MessagesRepository) : ViewModel() {
@@ -22,18 +21,5 @@ class MainViewModel(private val messagesRepository: MessagesRepository) : ViewMo
             _groupedMessages.value = messagesRepository.getMessages()
             _loading.value = false
         }
-    }
-
-    fun getMessagesForCsv(): LiveData<List<String>> {
-        val livedata = MutableLiveData<List<String>>()
-
-        viewModelScope.launch {
-            _loading.value = true
-            val messages = messagesRepository.getMessages()
-            livedata.value = CsvUtils.generateCsv(messages)
-            _loading.value = false
-        }
-
-        return livedata
     }
 }

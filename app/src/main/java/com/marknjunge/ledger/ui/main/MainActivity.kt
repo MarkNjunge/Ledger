@@ -28,9 +28,7 @@ import timber.log.Timber
 class MainActivity : BaseActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
-    private val REQUEST_WRITE_FILE: Int = 43
     private val viewModel: MainViewModel by viewModel()
-    private var csvContent: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +38,6 @@ class MainActivity : BaseActivity() {
         initializeRecyclerView()
 
         readSms()
-
-        btnExport.setOnClickListener {
-            viewModel.getMessagesForCsv().observe(this, Observer { csvContent ->
-                this.csvContent = csvContent
-                val intent =
-                    SAFUtils.getIntent("text/csv", "M-Pesa Transactions ${DateTime.now.format("yyyy-MM-dd HH:mm")}.csv")
-                startActivityForResult(intent, REQUEST_WRITE_FILE)
-            })
-        }
     }
 
     private fun initializeLoading() {
@@ -89,25 +78,6 @@ class MainActivity : BaseActivity() {
             )
         } else {
             viewModel.getMessages()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_WRITE_FILE && data != null) {
-                Timber.d(data.data.toString())
-
-                data.data?.let { uri ->
-                    csvContent?.let {
-                        val content = it.joinToString("\n").toByteArray()
-                        SAFUtils.writeContent(contentResolver, uri, content)
-
-                        Toast.makeText(this, "Transactons exported", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
         }
     }
 
