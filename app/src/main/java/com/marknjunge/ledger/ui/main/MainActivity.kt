@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.ui.base.BaseActivity
 import com.marknjunge.ledger.ui.detail.MessageActivity
@@ -51,7 +53,7 @@ class MainActivity : BaseActivity() {
 
     private fun initializeLoading() {
         viewModel.loading.observe(this, Observer { loading ->
-            //            refreshLayout.isRefreshing = loading
+            progressBar.visibility = if (loading) View.VISIBLE else View.GONE
         })
     }
 
@@ -69,6 +71,8 @@ class MainActivity : BaseActivity() {
         viewModel.groupedMessages.observe(this, Observer { items ->
             tvBalance.text = CurrencyFormatter.format(items.first().balance)
             adapter.setItems(items.take(4))
+            TransitionManager.beginDelayedTransition(rootMainActivity)
+            contentMainActivity.visibility = View.VISIBLE
         })
     }
 
