@@ -1,4 +1,4 @@
-package com.marknjunge.ledger.data
+package com.marknjunge.ledger.data.local
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -49,18 +49,10 @@ class SmsHelper(private val context: Context) {
     }
 
     @SuppressLint("DefaultLocale")
-    fun getMpesaMessages(): List<MpesaMessage> {
+    fun getMpesaMessages(): List<Sms> {
         return getRawMessages()
             .filter { it.body.isNotEmpty() }
             // Remove messages than are not transactions. e.g. failed, insufficient transaction
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
-            .mapNotNull {
-                try {
-                    MpesaMessage.create(it.body)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().recordException(e)
-                    null
-                }
-            }
     }
 }

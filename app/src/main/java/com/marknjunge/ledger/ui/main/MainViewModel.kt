@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.marknjunge.ledger.data.MessagesRepository
-import com.marknjunge.ledger.data.models.MessageGroup
+import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.utils.CsvUtils
 import kotlinx.coroutines.launch

@@ -1,8 +1,12 @@
-package com.marknjunge.ledger.data
+package com.marknjunge.ledger.data.repository
 
 import android.annotation.SuppressLint
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.marknjunge.ledger.data.local.MessagesDao
+import com.marknjunge.ledger.data.local.SmsHelper
 import com.marknjunge.ledger.data.models.MessageGroup
 import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.data.models.MpesaMessageEntity
 import com.marknjunge.ledger.utils.DateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,11 +18,53 @@ interface MessagesRepository {
 }
 
 class MessagesRepositoryImpl(
-    private val smsHelper: SmsHelper
+    private val smsHelper: SmsHelper,
+    private val messagesDao: MessagesDao
 ) : MessagesRepository {
 
     override suspend fun getMessages(): List<MpesaMessage> {
-        return smsHelper.getMpesaMessages()
+        val messages = smsHelper.getMpesaMessages()
+
+        val latest = messagesDao.getLatest()
+
+        for(message in messages){
+            if (latest != null && latest.body == message.body) {
+                break
+            }
+
+            try {
+                val mpesaMessage = MpesaMessage.create(message.body)
+
+                val entity = MpesaMessageEntity(
+                    0,
+                    mpesaMessage.code,
+                    mpesaMessage.transactionType,
+                    mpesaMessage.amount,
+                    mpesaMessage.accountNumber,
+                    mpesaMessage.transactionDate,
+                    mpesaMessage.balance,
+                    mpesaMessage.transactionCost,
+                    mpesaMessage.body
+                )
+
+                messagesDao.insert(entity)
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }
+        }
+
+        return messagesDao.getAll().map {
+            MpesaMessage(
+                it.body,
+                it.code,
+                it.transactionType,
+                it.amount,
+                it.accountNumber,
+                it.transactionDate,
+                it.balance,
+                it.transactionCost
+            )
+        }
     }
 
     override suspend fun getMessagesGrouped(): MutableList<MessageGroup> {

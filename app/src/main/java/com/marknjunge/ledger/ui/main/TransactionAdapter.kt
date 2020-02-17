@@ -45,7 +45,6 @@ class TransactionAdapter(private val context: Context, private val onClick: (Mpe
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
-            Timber.d(mpesaMessage.toString())
             tvTransactionAccount.text = mpesaMessage.accountNumber ?: mpesaMessage.transactionType.string()
 
             val dateFormat = if(DateUtils.isToday(mpesaMessage.transactionDate)) "HH:mm a" else "EEEE, d MMMM"
