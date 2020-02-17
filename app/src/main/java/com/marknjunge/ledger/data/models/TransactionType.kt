@@ -10,6 +10,7 @@ enum class TransactionType(val positive: Boolean?) {
     WITHDRAW(false),
     RECEIVE(true),
     AIRTIME(false),
+    AIRTIME_RECEIVE(null),
     BALANCE(null),
     DEPOSIT(true),
     UNKNOWN(null);

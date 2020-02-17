@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.utils.DateTime
 import kotlinx.android.parcel.Parcelize
+import timber.log.Timber
 import java.lang.Exception
 
 /**
@@ -38,8 +39,9 @@ data class MpesaMessage(
                     bodyLowerCase.contains(Regex("(.*) paid to")) -> TransactionType.BUY_GOODS
                     bodyLowerCase.contains(Regex("(.*) sent to (.*)")) -> TransactionType.SEND
                     bodyLowerCase.contains(Regex("(.*)withdraw (.*)")) -> TransactionType.WITHDRAW
-                    bodyLowerCase.contains(Regex("(.*) received (.*)")) -> TransactionType.RECEIVE
-                    bodyLowerCase.contains(Regex("(.*) airtime (.*)")) -> TransactionType.AIRTIME
+                    bodyLowerCase.contains(Regex("(.*) received ksh(.*)")) -> TransactionType.RECEIVE
+                    bodyLowerCase.contains(Regex("(.*) airtime on(.*)")) -> TransactionType.AIRTIME
+                    bodyLowerCase.contains(Regex("(.*) received airtime (.*)")) -> TransactionType.AIRTIME_RECEIVE
                     bodyLowerCase.contains(Regex("(.*)your m-pesa balance (.*)")) -> TransactionType.BALANCE
                     bodyLowerCase.contains(Regex("(.*) give (.*)")) -> TransactionType.DEPOSIT
                     else -> TransactionType.UNKNOWN
@@ -52,11 +54,12 @@ data class MpesaMessage(
                     TransactionType.SEND -> body.split("to ")[1].split(" on")[0]
                     TransactionType.PAY_BILL -> body.split("to ")[1].split(" on")[0]
                     TransactionType.BUY_GOODS -> body.split("to ")[1].split(" on")[0]
-                    TransactionType.WITHDRAW -> body.split("from ")[1].split(" new")[0]
+                    TransactionType.WITHDRAW -> body.split("from ")[1].split(" New")[0]
                     TransactionType.RECEIVE -> body.split("from ")[1].split(" on")[0]
                     TransactionType.AIRTIME -> null
+                    TransactionType.AIRTIME_RECEIVE -> body.split("from ")[1].split(" on")[0]
                     TransactionType.BALANCE -> null
-                    TransactionType.DEPOSIT -> bodyLowerCase.split("to ")[1].split(" new")[0]
+                    TransactionType.DEPOSIT -> body.split("to ")[1].split(" New")[0]
                     TransactionType.UNKNOWN -> null
                 }
 
@@ -86,6 +89,10 @@ data class MpesaMessage(
                         bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
                     ).timestamp
                     TransactionType.AIRTIME -> DateTime.parse(
+                        "d/M/yy  h:mm a",
+                        bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
+                    ).timestamp
+                    TransactionType.AIRTIME_RECEIVE -> DateTime.parse(
                         "d/M/yy  h:mm a",
                         bodyLowerCase.split(" on ")[1].split(".")[0].replace("at", "")
                     ).timestamp
@@ -126,11 +133,12 @@ data class MpesaMessage(
                         ",",
                         ""
                     ).toDouble()
+                    TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> body.split("balance was  Ksh")[1].split("  on")[0].replace(
                         ",",
                         ""
                     ).toDouble()
-                    TransactionType.DEPOSIT -> body.split("balance is Ksh")[1].replace(",", "").toDouble()
+                    TransactionType.DEPOSIT -> body.split("balance is Ksh")[1].split(".")[0].replace(",", "").toDouble()
                     TransactionType.UNKNOWN -> 0.0
                 }
 
@@ -157,6 +165,7 @@ data class MpesaMessage(
                         ",",
                         ""
                     ).toDouble()
+                    TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> 0.0
                     TransactionType.DEPOSIT -> 0.0
                     TransactionType.UNKNOWN -> 0.0
@@ -173,6 +182,7 @@ data class MpesaMessage(
                     transactionCost
                 )
             } catch (e: Exception) {
+                Timber.e("Error parsing message: $body")
                 FirebaseCrashlytics.getInstance().log(body)
                 throw e
             }

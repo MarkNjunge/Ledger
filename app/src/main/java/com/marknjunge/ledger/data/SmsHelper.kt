@@ -3,9 +3,9 @@ package com.marknjunge.ledger.data
 import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Telephony
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.data.models.Sms
-import timber.log.Timber
 
 /**
  * Created by MarkNjunge.
@@ -54,6 +54,13 @@ class SmsHelper(private val context: Context) {
             .filter { it.body.isNotEmpty() }
             // Remove messages than are not transactions. e.g. failed, insufficient transaction
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
-            .map { MpesaMessage.create(it.body) }
+            .mapNotNull {
+                try {
+                    MpesaMessage.create(it.body)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().recordException(e)
+                    null
+                }
+            }
     }
 }
