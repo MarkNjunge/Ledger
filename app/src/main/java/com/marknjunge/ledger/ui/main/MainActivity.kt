@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.ui.base.BaseActivity
 import com.marknjunge.ledger.ui.detail.MessageActivity
 import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.DateTime
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
     private val REQUEST_WRITE_FILE: Int = 43

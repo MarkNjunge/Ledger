@@ -2,13 +2,13 @@ package com.marknjunge.ledger.ui.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_message.*
 
-class MessageActivity : AppCompatActivity() {
+class MessageActivity : BaseActivity() {
 
     companion object {
         const val MESSAGE = "message"
