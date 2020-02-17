@@ -47,8 +47,6 @@ class MainActivity : BaseActivity() {
                 startActivityForResult(intent, REQUEST_WRITE_FILE)
             })
         }
-
-        readSms()
     }
 
     private fun initializeLoading() {
