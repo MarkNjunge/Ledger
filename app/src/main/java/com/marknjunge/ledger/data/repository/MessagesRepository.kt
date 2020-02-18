@@ -1,6 +1,9 @@
 package com.marknjunge.ledger.data.repository
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.data.local.MessagesDao
 import com.marknjunge.ledger.data.local.SmsHelper
@@ -13,6 +16,8 @@ import kotlinx.coroutines.withContext
 
 interface MessagesRepository {
     suspend fun getMessages(): List<MpesaMessage>
+
+    fun getPagedMessages(): LiveData<PagedList<MpesaMessage>>
 
     suspend fun getMessagesGrouped(): List<MessageGroup>
 }
@@ -27,7 +32,7 @@ class MessagesRepositoryImpl(
 
         val latest = messagesDao.getLatest()
 
-        for(message in messages){
+        for (message in messages) {
             if (latest != null && latest.body == message.body) {
                 break
             }
@@ -65,6 +70,21 @@ class MessagesRepositoryImpl(
                 it.transactionCost
             )
         }
+    }
+
+    override fun getPagedMessages(): LiveData<PagedList<MpesaMessage>> {
+        return messagesDao.pagedMessagesByDate().map {
+            MpesaMessage(
+                it.body,
+                it.code,
+                it.transactionType,
+                it.amount,
+                it.accountNumber,
+                it.transactionDate,
+                it.balance,
+                it.transactionCost
+            )
+        }.toLiveData(30)
     }
 
     override suspend fun getMessagesGrouped(): MutableList<MessageGroup> {

@@ -6,6 +6,7 @@ import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.data.repository.MessagesRepositoryImpl
 import com.marknjunge.ledger.data.local.SmsHelper
 import com.marknjunge.ledger.ui.main.MainViewModel
+import com.marknjunge.ledger.ui.transactions.TransactionsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,4 +20,5 @@ val appModule = module {
     single<MessagesRepository> { MessagesRepositoryImpl(get(), get()) }
 
     viewModel { MainViewModel(get()) }
+    viewModel { TransactionsViewModel(get()) }
 }

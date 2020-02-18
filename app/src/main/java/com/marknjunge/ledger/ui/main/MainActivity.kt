@@ -18,6 +18,7 @@ import androidx.transition.TransitionManager
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.ui.base.BaseActivity
 import com.marknjunge.ledger.ui.detail.MessageActivity
+import com.marknjunge.ledger.ui.transactions.TransactionsActivity
 import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.SAFUtils
@@ -38,6 +39,10 @@ class MainActivity : BaseActivity() {
         initializeRecyclerView()
 
         readSms()
+
+        tvSeeMore.setOnClickListener {
+            startActivity(Intent(this, TransactionsActivity::class.java))
+        }
     }
 
     private fun initializeLoading() {

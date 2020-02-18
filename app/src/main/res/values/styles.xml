@@ -6,6 +6,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="AppTheme.StyledActionBar" parent="AppTheme">
         <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 

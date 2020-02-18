@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.transactions.TransactionsActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -26,7 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/AppTheme.StyledActionBar" />
         <activity android:name=".ui.detail.MessageActivity" />
 
         <meta-data
