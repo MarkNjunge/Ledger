@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.format.DateUtils
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.ui.base.BaseActivity
 import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.DateTime
+import com.marknjunge.ledger.utils.saveToClipboard
 import kotlinx.android.synthetic.main.activity_transaction.*
 
 class TransactionActivity : BaseActivity() {
@@ -38,7 +39,7 @@ class TransactionActivity : BaseActivity() {
 
         supportActionBar?.title = mpesaMessage.code
 
-        tvMessageCode.text = mpesaMessage.code
+        tvTransactionCode.text = mpesaMessage.code
         tvMessageBody.text = mpesaMessage.body
         tvTransactionType.text = mpesaMessage.transactionType.string()
 
@@ -57,5 +58,17 @@ class TransactionActivity : BaseActivity() {
         }
 
         tvTransactionCost.text = CurrencyFormatter.format(mpesaMessage.transactionCost)
+
+        tvTransactionCode.setOnLongClickListener {
+            saveToClipboard("code", mpesaMessage.code)
+            Toast.makeText(this, "M-Pesa code saved to clipboard", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        tvMessageBody.setOnLongClickListener {
+            saveToClipboard("message", mpesaMessage.body)
+            Toast.makeText(this, "M-Pesa message saved to clipboard", Toast.LENGTH_SHORT).show()
+            true
+        }
     }
 }
