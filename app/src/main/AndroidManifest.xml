@@ -32,7 +32,9 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.StyledActionBar" />
-        <activity android:name=".ui.detail.MessageActivity" />
+        <activity
+            android:name=".ui.detail.TransactionActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -16,5 +16,5 @@ enum class TransactionType(val positive: Boolean?) {
     UNKNOWN(null);
 
     @SuppressLint("DefaultLocale")
-    fun string() = this.name.replace("_", " ").toLowerCase().split(" ").joinToString("") {it.capitalize()}
+    fun string() = this.name.replace("_", " ").toLowerCase().split(" ").joinToString(" ") {it.capitalize()}
 }
