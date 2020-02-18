@@ -12,6 +12,9 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
+
+    def commitHash = "git rev-parse --short HEAD".execute().text.trim()
+
     defaultConfig {
         applicationId "com.marknjunge.ledger"
         minSdkVersion 21
@@ -19,13 +22,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         android.applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "ledger-${variant.name}.apk"
+                outputFileName = "ledger-${variant.name}-${commitHash}.apk"
             }
         }
     }
     buildTypes {
+        debug {
+            versionNameSuffix "-${commitHash}"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
