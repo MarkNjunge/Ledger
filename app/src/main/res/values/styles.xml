@@ -27,7 +27,7 @@
     </style>
 
     <style name="ActionBarTextAppearance" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/krona_one</item>
+        <item name="android:fontFamily">@font/crimson_text</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textAllCaps">true</item>

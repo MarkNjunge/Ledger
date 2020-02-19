@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/krona_one</item>
+        <item>@font/crimson_text</item>
         <item>@font/rubik</item>
     </array>
 </resources>
