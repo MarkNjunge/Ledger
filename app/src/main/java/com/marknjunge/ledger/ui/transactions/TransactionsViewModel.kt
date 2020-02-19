@@ -11,4 +11,8 @@ class TransactionsViewModel(private val messagesRepository: MessagesRepository) 
     fun getPagedMessages(): LiveData<PagedList<MpesaMessage>> {
         return messagesRepository.getPagedMessages()
     }
+
+    fun search(term: String): LiveData<PagedList<MpesaMessage>> {
+        return messagesRepository.search(term)
+    }
 }

@@ -19,6 +19,9 @@ interface MessagesDao {
     @Query("SELECT * from mpesa_messages ORDER BY transaction_date DESC LIMIT 1")
     suspend fun getLatest(): MpesaMessageEntity?
 
+    @Query("SELECT * from mpesa_messages WHERE body LIKE :term ORDER BY transaction_date")
+    fun search(term: String): DataSource.Factory<Int, MpesaMessageEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(mpesaMessageEntity: MpesaMessageEntity)
 }

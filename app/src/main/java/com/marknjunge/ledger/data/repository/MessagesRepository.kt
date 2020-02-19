@@ -19,6 +19,8 @@ interface MessagesRepository {
 
     fun getPagedMessages(): LiveData<PagedList<MpesaMessage>>
 
+    fun search(term: String): LiveData<PagedList<MpesaMessage>>
+
     suspend fun getMessagesGrouped(): List<MessageGroup>
 }
 
@@ -74,6 +76,21 @@ class MessagesRepositoryImpl(
 
     override fun getPagedMessages(): LiveData<PagedList<MpesaMessage>> {
         return messagesDao.pagedMessagesByDate().map {
+            MpesaMessage(
+                it.body,
+                it.code,
+                it.transactionType,
+                it.amount,
+                it.accountNumber,
+                it.transactionDate,
+                it.balance,
+                it.transactionCost
+            )
+        }.toLiveData(30)
+    }
+
+    override fun search(term: String): LiveData<PagedList<MpesaMessage>> {
+        return messagesDao.search("%$term%").map {
             MpesaMessage(
                 it.body,
                 it.code,
