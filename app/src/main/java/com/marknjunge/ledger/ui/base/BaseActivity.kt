@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.repository.MessagesRepository
+import com.marknjunge.ledger.ui.about.AboutActivity
 import com.marknjunge.ledger.utils.CsvUtils
 import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.SAFUtils
@@ -36,7 +37,8 @@ open class BaseActivity : AppCompatActivity() {
                 exportAsCsv()
                 true
             }
-            R.id.menu_settings -> {
+            R.id.menu_about -> {
+                startActivity(Intent(this, AboutActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

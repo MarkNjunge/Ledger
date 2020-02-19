@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.about.AboutActivity"></activity>
         <activity
             android:name=".ui.transactions.TransactionsActivity"
             android:parentActivityName=".ui.main.MainActivity" />
