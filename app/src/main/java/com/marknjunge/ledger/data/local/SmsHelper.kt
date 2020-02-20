@@ -54,5 +54,6 @@ class SmsHelper(private val context: Context) {
             .filter { it.body.isNotEmpty() }
             // Remove messages than are not transactions. e.g. failed, insufficient transaction
             .filter { it.body.toLowerCase().contains(Regex("(.{10} )(confirmed.)")) }
+            .sortedBy { it.date }
     }
 }

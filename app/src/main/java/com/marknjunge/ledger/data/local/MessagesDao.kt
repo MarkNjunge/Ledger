@@ -9,7 +9,7 @@ import com.marknjunge.ledger.data.models.MpesaMessageEntity
 
 @Dao
 interface MessagesDao {
-    @Query("SELECT * from mpesa_messages")
+    @Query("SELECT * from mpesa_messages ORDER BY transaction_date DESC")
     suspend fun getAll(): List<MpesaMessageEntity>
 
     // The Int type parameter tells Room to use a PositionalDataSource object.

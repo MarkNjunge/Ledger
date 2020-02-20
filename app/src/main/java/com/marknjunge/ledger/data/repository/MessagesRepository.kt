@@ -13,6 +13,7 @@ import com.marknjunge.ledger.data.models.MpesaMessageEntity
 import com.marknjunge.ledger.utils.DateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 interface MessagesRepository {
     suspend fun getMessages(): List<MpesaMessage>
@@ -30,14 +31,21 @@ class MessagesRepositoryImpl(
 ) : MessagesRepository {
 
     override suspend fun getMessages(): List<MpesaMessage> {
-        val messages = smsHelper.getMpesaMessages()
-
         val latest = messagesDao.getLatest()
 
+        var messages = smsHelper.getMpesaMessages()
+        if (latest != null){
+            // If there are already messages, sort the messages by date descending
+            // so that the so that the saved one is arrived at quicker
+            messages = messages.sortedByDescending { it.date }
+        }
+
+        var count = 0
         for (message in messages) {
             if (latest != null && latest.body == message.body) {
                 break
             }
+            count++
 
             try {
                 val mpesaMessage = MpesaMessage.create(message.body)
@@ -59,6 +67,7 @@ class MessagesRepositoryImpl(
                 FirebaseCrashlytics.getInstance().recordException(e)
             }
         }
+        Timber.d("Inserted $count new messages")
 
         return messagesDao.getAll().map {
             MpesaMessage(
