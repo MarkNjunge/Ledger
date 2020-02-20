@@ -1,7 +1,9 @@
 package com.marknjunge.ledger.data.models
 
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class MpesaMessageTest {
     private val reversalMsg = MpesaMessage.create(
@@ -55,6 +57,13 @@ class MpesaMessageTest {
         "DQ94ZE762 Confirmed. on 3/7/13 at 9:07 AM Give Ksh1,000.00 cash to Digital Africa Services Jolet " +
                 "Supermarket New M-PESA balance is Ksh1,338.00."
     )
+
+    @Before
+    fun setup(){
+        // Tests are configured based on GMT +3
+        // Running on CI with a different timezone will result in errors
+        TimeZone.setDefault(TimeZone.getTimeZone("Africa/Nairobi"))
+    }
 
     @Test
     fun `can get transaction ref`() {
