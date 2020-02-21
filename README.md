@@ -13,3 +13,7 @@ Ledger scans M-Pesa messages and extracts data from them.
 - View all M-Pesa transactions
 - Search
 - Export as CSV
+
+## Screenshot
+
+[<img src="./art/screenshot.png" />](./art/screenshot.png)
