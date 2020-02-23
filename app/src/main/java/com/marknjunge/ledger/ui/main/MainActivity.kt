@@ -1,13 +1,9 @@
 package com.marknjunge.ledger.ui.main
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
 
-    private val REQUEST_READ_SMS: Int = 1
     private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +28,7 @@ class MainActivity : BaseActivity() {
         initializeLoading()
         initializeRecyclerView()
 
-        readSms()
+        viewModel.getMessages()
 
         tvSeeMore.setOnClickListener {
             startActivity(Intent(this, TransactionsActivity::class.java))
@@ -61,34 +56,6 @@ class MainActivity : BaseActivity() {
             TransitionManager.beginDelayedTransition(rootMainActivity)
             contentMainActivity.visibility = View.VISIBLE
         })
-    }
-
-    private fun readSms() {
-        if (ContextCompat.checkSelfPermission(
-                this@MainActivity,
-                Manifest.permission.READ_SMS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this@MainActivity,
-                arrayOf(Manifest.permission.READ_SMS),
-                REQUEST_READ_SMS
-            )
-        } else {
-            viewModel.getMessages()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_READ_SMS) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                readSms()
-            }
-        }
     }
 
 }
