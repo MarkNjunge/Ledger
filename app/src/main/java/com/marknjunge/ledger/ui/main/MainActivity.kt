@@ -51,10 +51,16 @@ class MainActivity : BaseActivity() {
         rvGroups.adapter = adapter
 
         viewModel.groupedMessages.observe(this, Observer { items ->
-            tvBalance.text = CurrencyFormatter.format(items.first().balance)
-            adapter.setItems(items.take(4))
-            TransitionManager.beginDelayedTransition(rootMainActivity)
-            contentMainActivity.visibility = View.VISIBLE
+            if (items.isNotEmpty()) {
+                tvBalance.text = CurrencyFormatter.format(items.first().balance)
+                adapter.setItems(items.take(4))
+                TransitionManager.beginDelayedTransition(rootMainActivity)
+                contentMainActivity.visibility = View.VISIBLE
+                contentNoMessages.visibility = View.GONE
+            } else {
+                contentNoMessages.visibility = View.VISIBLE
+                contentMainActivity.visibility = View.GONE
+            }
         })
     }
 
