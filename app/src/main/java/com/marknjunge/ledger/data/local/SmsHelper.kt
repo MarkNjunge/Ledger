@@ -6,6 +6,7 @@ import android.provider.Telephony
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.data.models.Sms
+import java.lang.Exception
 
 /**
  * Created by MarkNjunge.
@@ -34,12 +35,16 @@ class SmsHelper(private val context: Context) {
 
         messagesCursor.moveToFirst()
         do {
-            val address = messagesCursor.getString(addressIndex)
-            val date = messagesCursor.getString(dateIndex)
+            try {
+                val address = messagesCursor.getString(addressIndex)
+                val date = messagesCursor.getString(dateIndex)
 
-            if (address == "MPESA") {
-                val body = messagesCursor.getString(bodyIndex)
-                messageList.add(Sms(address, body, date.toLong()))
+                if (address == "MPESA") {
+                    val body = messagesCursor.getString(bodyIndex)
+                    messageList.add(Sms(address, body, date.toLong()))
+                }
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
             }
         } while (messagesCursor.moveToNext())
 
