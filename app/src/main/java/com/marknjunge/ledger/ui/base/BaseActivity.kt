@@ -3,13 +3,16 @@ package com.marknjunge.ledger.ui.base
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.ui.about.AboutActivity
+import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CsvUtils
 import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.SAFUtils
@@ -25,14 +28,28 @@ open class BaseActivity : AppCompatActivity() {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val REQUEST_WRITE_FILE: Int = 43
     private var csvContent: List<String>? = null
+    private val appPreferences: AppPreferences by inject()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_menu, menu)
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        super.onPrepareOptionsMenu(menu)
+
+        menu?.findItem(R.id.menu_update)?.isVisible = AppUpdate.shouldUpdate(appPreferences, true)
+
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_update -> {
+                val url = "https://github.com/MarkNjunge/Ledger/releases"
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                true
+            }
             R.id.menu_export -> {
                 exportAsCsv()
                 true

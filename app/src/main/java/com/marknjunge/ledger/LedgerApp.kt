@@ -2,7 +2,9 @@ package com.marknjunge.ledger
 
 import android.app.Application
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.di.appModule
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -15,6 +17,8 @@ import timber.log.Timber
 
 @Suppress("unused")
 class LedgerApp : Application() {
+    private val appPreferences: AppPreferences by inject()
+
     override fun onCreate() {
         super.onCreate()
 
@@ -32,5 +36,7 @@ class LedgerApp : Application() {
             androidContext(this@LedgerApp)
             modules(appModule)
         }
+
+        appPreferences.currentVersion = BuildConfig.VERSION_CODE
     }
 }

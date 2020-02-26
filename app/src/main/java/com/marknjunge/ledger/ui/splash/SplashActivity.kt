@@ -8,14 +8,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.R
+import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.main.MainActivity
+import com.marknjunge.ledger.utils.AppUpdate
 import kotlinx.android.synthetic.main.activity_splash.*
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class SplashActivity : AppCompatActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
+    private val appPreferences: AppPreferences by inject()
+    private val remoteConfig: FirebaseRemoteConfig by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +32,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_READ_SMS) {
             if (isPermissionGranted(grantResults)) {
-//            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                proceed()
             } else {
                 Timber.d("Permission not granted")
                 setContentView(R.layout.activity_splash)
@@ -44,6 +48,12 @@ class SplashActivity : AppCompatActivity() {
         if (isPermissionGranted(Manifest.permission.READ_SMS)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_SMS), REQUEST_READ_SMS)
         } else {
+            proceed()
+        }
+    }
+
+    private fun proceed() {
+        AppUpdate.getLatestVersion(remoteConfig, appPreferences) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

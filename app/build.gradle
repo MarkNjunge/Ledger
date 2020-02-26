@@ -64,16 +64,19 @@ dependencies {
 
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'com.github.florent37:expansionpanel:1.1.1'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+    implementation "com.google.firebase:firebase-config-ktx:19.1.1"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.github.florent37:expansionpanel:1.1.1'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     implementation 'org.koin:koin-android:2.0.1'
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
