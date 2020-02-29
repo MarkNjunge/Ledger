@@ -3,8 +3,15 @@
     <color name="colorPrimary">#252733</color>
     <color name="colorPrimaryDark">#1B1D28</color>
     <color name="colorAccent">#F47500</color>
-    <color name="colorPositiveValue">#31B75E</color>
-    <color name="colorNegativeValue">#C93636</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#3B3C46</color>
+
+    <color name="colorWindowBackground">#f2f2f2</color>
+    <color name="colorActionBarBackground">#252733</color>
+
     <color name="colorTextPrimary">#3B3C46</color>
     <color name="colorTextSecondary">#74757C</color>
+
+    <color name="colorPositiveValue">#31B75E</color>
+    <color name="colorNegativeValue">#C93636</color>
 </resources>

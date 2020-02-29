@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/AppTheme.StyledActionBar" />
+            android:theme="@style/AppTheme.CustomAppBar"/>
         <activity
             android:name=".ui.detail.TransactionActivity"
             android:parentActivityName=".ui.main.MainActivity" />

@@ -1,31 +1,39 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
         <item name="android:fontFamily">@font/rubik</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
     </style>
 
-    <style name="AppTheme.StyledActionBar" parent="AppTheme">
-        <item name="actionBarStyle">@style/ActionBarStyle</item>
-    </style>
-
-    <style name="AppTheme.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorWindowBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/rubik</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
-    <style name="ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="titleTextStyle">@style/ActionBarTextAppearance</item>
+    <style name="AppTheme.CustomAppBar" parent="AppTheme">
+        <item name="actionBarStyle">@style/AppTheme.CustomActionBarStyle</item>
     </style>
 
-    <style name="ActionBarTextAppearance" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.ActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Surface">
+        <item name="background">@color/colorActionBarBackground</item>
+    </style>
+
+    <style name="AppTheme.CustomActionBarStyle" parent="@style/Widget.MaterialComponents.ActionBar.Surface">
+        <item name="titleTextStyle">@style/AppTheme.CustomActionBarTextAppearance</item>
+        <item name="background">@color/colorActionBarBackground</item>
+    </style>
+
+    <style name="AppTheme.CustomActionBarTextAppearance" parent="Theme.AppCompat.Light">
         <item name="android:fontFamily">@font/crimson_text</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#FFFFFF</item>

@@ -66,8 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:alpha=".87"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorTextPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             tools:text="Ksh. 2,000.00" />
@@ -103,6 +102,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/rubik"
+            android:textColor="@color/colorTextPrimary"
             android:padding="8dp"
             android:text="See More"
             android:textStyle="bold"

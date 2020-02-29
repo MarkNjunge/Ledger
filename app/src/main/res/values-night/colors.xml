@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F4943A</color>
+    <color name="colorPrimaryDark">#0D0E14</color>
+    <color name="colorAccent">#F4943A</color>
+    <color name="colorSurface">#14161E</color>
+    <color name="colorOnSurface">#E2E2E3</color>
+
+    <color name="colorWindowBackground">#121319</color>
+    <color name="colorActionBarBackground">#14161E</color>
+
+    <color name="colorTextPrimary">#E2E2E3</color>
+    <color name="colorTextSecondary">#9E9FA8</color>
+
+    <color name="colorPositiveValue">#58B777</color>
+    <color name="colorNegativeValue">#C94E4E</color>
+</resources>

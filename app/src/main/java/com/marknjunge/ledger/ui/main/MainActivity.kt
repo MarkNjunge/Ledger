@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.base.BaseActivity
@@ -74,7 +75,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showAppUpdateDialog(latestVersion: Int) {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle("Update available")
             .setMessage("An update is available for Ledger!")
             .setPositiveButton("Download") { _, _ ->

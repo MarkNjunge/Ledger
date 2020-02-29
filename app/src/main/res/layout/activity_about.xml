@@ -12,6 +12,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:tint="@color/colorTextPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
@@ -64,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgSourceCode" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -84,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/colorTextPrimary"
                 android:layout_marginTop="16dp"
                 android:text="Mark Kamau" />
 
@@ -111,6 +113,7 @@
                     android:id="@+id/imgWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:tint="@color/colorTextPrimary"
                     android:layout_marginStart="8dp"
                     android:padding="8dp"
                     app:srcCompat="@drawable/ic_website" />
@@ -120,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:tint="@color/colorTextPrimary"
                     android:padding="8dp"
                     app:srcCompat="@drawable/ic_github" />
 
@@ -129,9 +133,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:padding="8dp"
+                    android:tint="@color/colorTextPrimary"
                     app:srcCompat="@drawable/ic_linkedin" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
