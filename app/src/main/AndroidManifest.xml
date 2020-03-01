@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:theme="@style/AppTheme.CustomAppBar" />
         <activity
             android:name=".ui.transactions.TransactionsActivity"

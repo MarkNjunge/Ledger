@@ -1,4 +1,4 @@
-package com.marknjunge.ledger.ui.about
+package com.marknjunge.ledger.ui.settings
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,17 +11,17 @@ import com.marknjunge.ledger.BuildConfig
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.models.ThemePreference
-import kotlinx.android.synthetic.main.activity_about.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import org.koin.android.ext.android.inject
 
-class AboutActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     private val appPreferences: AppPreferences by inject()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        setContentView(R.layout.activity_settings)
 
         tvVersionName.text = "Version ${BuildConfig.VERSION_NAME}"
         setThemeText()

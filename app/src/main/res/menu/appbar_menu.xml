@@ -12,7 +12,7 @@
         android:title="Export as CSV"
         app:showAsAction="never" />
     <item
-        android:id="@+id/menu_about"
-        android:title="About"
+        android:id="@+id/menu_settings"
+        android:title="Settings"
         app:showAsAction="never" />
 </menu>

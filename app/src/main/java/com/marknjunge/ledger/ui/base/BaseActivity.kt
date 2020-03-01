@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.repository.MessagesRepository
-import com.marknjunge.ledger.ui.about.AboutActivity
+import com.marknjunge.ledger.ui.settings.SettingsActivity
 import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CsvUtils
 import com.marknjunge.ledger.utils.DateTime
@@ -54,8 +54,8 @@ open class BaseActivity : AppCompatActivity() {
                 exportAsCsv()
                 true
             }
-            R.id.menu_about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
+            R.id.menu_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
