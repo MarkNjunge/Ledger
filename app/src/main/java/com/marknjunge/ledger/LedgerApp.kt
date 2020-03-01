@@ -1,8 +1,10 @@
 package com.marknjunge.ledger
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.data.local.AppPreferences
+import com.marknjunge.ledger.data.models.ThemePreference
 import com.marknjunge.ledger.di.appModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -38,5 +40,11 @@ class LedgerApp : Application() {
         }
 
         appPreferences.currentVersion = BuildConfig.VERSION_CODE
+        when (appPreferences.themePreference) {
+            ThemePreference.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            ThemePreference.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            ThemePreference.BATTERY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+            ThemePreference.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
     }
 }
