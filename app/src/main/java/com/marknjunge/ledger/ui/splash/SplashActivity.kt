@@ -8,11 +8,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.main.MainActivity
-import com.marknjunge.ledger.utils.AppUpdate
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -21,7 +19,6 @@ class SplashActivity : AppCompatActivity() {
 
     private val REQUEST_READ_SMS: Int = 1
     private val appPreferences: AppPreferences by inject()
-    private val remoteConfig: FirebaseRemoteConfig by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +50,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun proceed() {
-        AppUpdate.getLatestVersion(remoteConfig, appPreferences) {
+
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }
     }
 
     private fun Context.isPermissionGranted(permission: String): Boolean {

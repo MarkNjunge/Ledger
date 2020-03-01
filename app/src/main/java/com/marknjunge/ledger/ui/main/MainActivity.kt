@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.base.BaseActivity
@@ -26,6 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : BaseActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val appPreferences: AppPreferences by inject()
+    private val remoteConfig: FirebaseRemoteConfig by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,8 @@ class MainActivity : BaseActivity() {
         tvSeeMore.setOnClickListener {
             startActivity(Intent(this, TransactionsActivity::class.java))
         }
+
+        checkForUpdate()
     }
 
     private fun initializeLoading() {
@@ -67,26 +71,30 @@ class MainActivity : BaseActivity() {
                 contentNoMessages.visibility = View.VISIBLE
                 contentMainActivity.visibility = View.GONE
             }
+        })
+    }
 
+    private fun checkForUpdate() {
+        AppUpdate.getLatestVersion(remoteConfig, appPreferences) {
             if (AppUpdate.shouldUpdate(appPreferences, false)) {
                 showAppUpdateDialog(appPreferences.latestVersion)
             }
-        })
+        }
     }
 
     private fun showAppUpdateDialog(latestVersion: Int) {
         MaterialAlertDialogBuilder(this)
-            .setTitle("Update available")
-            .setMessage("An update is available for Ledger!")
-            .setPositiveButton("Download") { _, _ ->
-                val url = "https://github.com/MarkNjunge/Ledger/releases"
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            }
-            .setNegativeButton("Cancel") { _, _ -> }
-            .setNeutralButton("Skip") { _, _ ->
-                appPreferences.skipUpdateVer = latestVersion
-            }
-            .show()
+                .setTitle("Update available")
+                .setMessage("An update is available for Ledger!")
+                .setPositiveButton("Download") { _, _ ->
+                    val url = "https://github.com/MarkNjunge/Ledger/releases"
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
+                .setNegativeButton("Cancel") { _, _ -> }
+                .setNeutralButton("Skip") { _, _ ->
+                    appPreferences.skipUpdateVer = latestVersion
+                }
+                .show()
 
     }
 
