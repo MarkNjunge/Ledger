@@ -14,4 +14,6 @@
 
     <color name="colorPositiveValue">#58B777</color>
     <color name="colorNegativeValue">#C94E4E</color>
+    <color name="colorDivider">#2C2D32</color>
+
 </resources>
