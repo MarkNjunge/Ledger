@@ -12,6 +12,7 @@ import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.ui.settings.SettingsActivity
+import com.marknjunge.ledger.ui.transactions.TransactionsActivity
 import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CsvUtils
 import com.marknjunge.ledger.utils.DateTime
@@ -39,6 +40,10 @@ open class BaseActivity : AppCompatActivity() {
         super.onPrepareOptionsMenu(menu)
 
         menu?.findItem(R.id.menu_update)?.isVisible = AppUpdate.shouldUpdate(appPreferences, true)
+
+        if (this !is TransactionsActivity) {
+            menu?.findItem(R.id.menu_export)?.isVisible = false
+        }
 
         return true
     }

@@ -10,7 +10,8 @@
     <item
         android:id="@+id/menu_export"
         android:title="Export as CSV"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_export"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_settings"
         android:title="Settings"

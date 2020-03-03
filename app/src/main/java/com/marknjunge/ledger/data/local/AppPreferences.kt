@@ -10,6 +10,7 @@ interface AppPreferences {
     var latestVersion: Int
     var skipUpdateVer: Int
     var themePreference: ThemePreference
+    var hasSeenExportPrompt: Boolean
 }
 
 class AppPreferencesImpl(private val context: Context) : AppPreferences {
@@ -46,10 +47,17 @@ class AppPreferencesImpl(private val context: Context) : AppPreferences {
             prefutils.set(THEME_PREFERENCE, value.name)
         }
 
+    override var hasSeenExportPrompt: Boolean
+        get() = prefutils.get(HAS_SEEN_PREFERENCE_PROMPT, false)
+        set(value) {
+            prefutils.set(HAS_SEEN_PREFERENCE_PROMPT, value)
+        }
+
     companion object {
         private const val CURRENT_VERSION = "current_version"
         private const val LATEST_VERSION = "latest_version"
         private const val SKIP_UPDATE_VER = "skip_update_version"
         private const val THEME_PREFERENCE = "theme_preference"
+        private const val HAS_SEEN_PREFERENCE_PROMPT = "has_seen_preference_prompt"
     }
 }
