@@ -1,11 +1,9 @@
 package com.marknjunge.ledger.ui.main
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +18,7 @@ import com.marknjunge.ledger.ui.detail.TransactionActivity
 import com.marknjunge.ledger.ui.transactions.TransactionsActivity
 import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CurrencyFormatter
+import com.marknjunge.ledger.utils.openUrlInCustomTab
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,17 +83,16 @@ class MainActivity : BaseActivity() {
 
     private fun showAppUpdateDialog(latestVersion: Int) {
         MaterialAlertDialogBuilder(this)
-                .setTitle("Update available")
-                .setMessage("An update is available for Ledger!")
-                .setPositiveButton("Download") { _, _ ->
-                    val url = "https://github.com/MarkNjunge/Ledger/releases"
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                }
-                .setNegativeButton("Cancel") { _, _ -> }
-                .setNeutralButton("Skip") { _, _ ->
-                    appPreferences.skipUpdateVer = latestVersion
-                }
-                .show()
+            .setTitle("Update available")
+            .setMessage("An update is available for Ledger!")
+            .setPositiveButton("Download") { _, _ ->
+                openUrlInCustomTab("https://github.com/MarkNjunge/Ledger/releases")
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .setNeutralButton("Skip") { _, _ ->
+                appPreferences.skipUpdateVer = latestVersion
+            }
+            .show()
 
     }
 

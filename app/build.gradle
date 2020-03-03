@@ -79,6 +79,7 @@ dependencies {
     implementation 'com.github.florent37:expansionpanel:1.1.1'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.0'
+    implementation "androidx.browser:browser:1.2.0"
 
     implementation 'org.koin:koin-android:2.0.1'
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'

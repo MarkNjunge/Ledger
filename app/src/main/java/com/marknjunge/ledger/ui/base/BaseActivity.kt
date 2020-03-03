@@ -3,7 +3,6 @@ package com.marknjunge.ledger.ui.base
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -13,10 +12,7 @@ import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.repository.MessagesRepository
 import com.marknjunge.ledger.ui.settings.SettingsActivity
 import com.marknjunge.ledger.ui.transactions.TransactionsActivity
-import com.marknjunge.ledger.utils.AppUpdate
-import com.marknjunge.ledger.utils.CsvUtils
-import com.marknjunge.ledger.utils.DateTime
-import com.marknjunge.ledger.utils.SAFUtils
+import com.marknjunge.ledger.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,8 +47,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_update -> {
-                val url = "https://github.com/MarkNjunge/Ledger/releases"
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                openUrlInCustomTab("https://github.com/MarkNjunge/Ledger/releases")
                 true
             }
             R.id.menu_export -> {
