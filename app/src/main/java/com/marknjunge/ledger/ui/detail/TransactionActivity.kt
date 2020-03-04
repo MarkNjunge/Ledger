@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.marknjunge.ledger.R
@@ -70,5 +72,31 @@ class TransactionActivity : BaseActivity() {
             Toast.makeText(this, "M-Pesa message saved to clipboard", Toast.LENGTH_SHORT).show()
             true
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        super.onPrepareOptionsMenu(menu)
+
+        menu?.findItem(R.id.menu_share)?.isVisible = true
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_share -> {
+                shareMessage()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun shareMessage() {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mpesaMessage.body)
+        sendIntent.type = "text/plain"
+        startActivity(Intent.createChooser(sendIntent, "Share via..."))
     }
 }

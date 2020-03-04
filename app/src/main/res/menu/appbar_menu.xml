@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_share"
+        android:title="Share"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        tools:visible="true" />
+    <item
         android:id="@+id/menu_update"
         android:icon="@drawable/ic_update"
         android:title="Update"
