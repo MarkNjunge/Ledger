@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/menu_update"
         android:icon="@drawable/ic_update"
         android:title="Update"
-        app:showAsAction="always" />
+        android:visible="false"
+        app:showAsAction="always"
+        tools:visible="true" />
     <item
         android:id="@+id/menu_export"
-        android:title="Export as CSV"
         android:icon="@drawable/ic_export"
-        app:showAsAction="ifRoom" />
+        android:title="Export as CSV"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        tools:visible="true" />
     <item
         android:id="@+id/menu_settings"
         android:title="Settings"

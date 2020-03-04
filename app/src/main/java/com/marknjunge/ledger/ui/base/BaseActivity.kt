@@ -28,10 +28,6 @@ open class BaseActivity : AppCompatActivity() {
 
         menu?.findItem(R.id.menu_update)?.isVisible = AppUpdate.shouldUpdate(appPreferences, true)
 
-        if (this !is TransactionsActivity) {
-            menu?.findItem(R.id.menu_export)?.isVisible = false
-        }
-
         return true
     }
 

@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -51,6 +52,14 @@ class TransactionsActivity : BaseActivity() {
         }
 
         showExportPrompt()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        super.onPrepareOptionsMenu(menu)
+
+        menu?.findItem(R.id.menu_export)?.isVisible = true
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
