@@ -36,7 +36,7 @@
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.CustomAppBar" />
         <activity
-            android:name=".ui.detail.TransactionActivity"
+            android:name=".ui.transactionDetail.TransactionDetailActivity"
             android:parentActivityName=".ui.main.MainActivity" />
 
         <meta-data

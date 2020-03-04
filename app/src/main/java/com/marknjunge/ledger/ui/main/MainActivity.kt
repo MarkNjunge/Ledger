@@ -14,7 +14,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.base.BaseActivity
-import com.marknjunge.ledger.ui.detail.TransactionActivity
+import com.marknjunge.ledger.ui.transactionDetail.TransactionDetailActivity
 import com.marknjunge.ledger.ui.transactions.TransactionsActivity
 import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CurrencyFormatter
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity() {
         rvGroups.addItemDecoration(DividerItemDecoration(this@MainActivity, LinearLayout.VERTICAL))
 
         val adapter = TransactionAdapter(this@MainActivity) { message ->
-            TransactionActivity.start(this@MainActivity, message)
+            TransactionDetailActivity.start(this@MainActivity, message)
         }
         rvGroups.adapter = adapter
 

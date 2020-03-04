@@ -1,4 +1,4 @@
-package com.marknjunge.ledger.ui.detail
+package com.marknjunge.ledger.ui.transactionDetail
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,9 +14,9 @@ import com.marknjunge.ledger.ui.base.BaseActivity
 import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.DateTime
 import com.marknjunge.ledger.utils.saveToClipboard
-import kotlinx.android.synthetic.main.activity_transaction.*
+import kotlinx.android.synthetic.main.activity_transaction_detail.*
 
-class TransactionActivity : BaseActivity() {
+class TransactionDetailActivity : BaseActivity() {
 
     private lateinit var mpesaMessage: MpesaMessage
 
@@ -25,7 +25,7 @@ class TransactionActivity : BaseActivity() {
         private const val MESSAGE = "message"
 
         fun start(context: Context, message: MpesaMessage) {
-            val i = Intent(context, TransactionActivity::class.java)
+            val i = Intent(context, TransactionDetailActivity::class.java)
             i.putExtra(MESSAGE, message)
             context.startActivity(i)
         }
@@ -35,12 +35,17 @@ class TransactionActivity : BaseActivity() {
     @SuppressLint("SetTextI18n", "DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transaction)
+        setContentView(R.layout.activity_transaction_detail)
 
         mpesaMessage = intent.extras!!.get(MESSAGE) as MpesaMessage
 
         supportActionBar?.title = mpesaMessage.code
 
+        setUiData()
+        setOnClickListeners()
+    }
+
+    private fun setUiData() {
         tvTransactionCode.text = mpesaMessage.code
         tvMessageBody.text = mpesaMessage.body
         tvTransactionType.text = mpesaMessage.transactionType.string()
@@ -52,15 +57,17 @@ class TransactionActivity : BaseActivity() {
         tvTransactionAmount.text = "$transactionSign ${CurrencyFormatter.format(mpesaMessage.amount)}"
         mpesaMessage.transactionType.positive?.let {
             val i = if (it) {
-                ContextCompat.getColor(this@TransactionActivity, R.color.colorPositiveValue)
+                ContextCompat.getColor(this@TransactionDetailActivity, R.color.colorPositiveValue)
             } else {
-                ContextCompat.getColor(this@TransactionActivity, R.color.colorNegativeValue)
+                ContextCompat.getColor(this@TransactionDetailActivity, R.color.colorNegativeValue)
             }
             tvTransactionAmount.setTextColor(i)
         }
 
         tvTransactionCost.text = CurrencyFormatter.format(mpesaMessage.transactionCost)
+    }
 
+    private fun setOnClickListeners() {
         tvTransactionCode.setOnLongClickListener {
             saveToClipboard("code", mpesaMessage.code)
             Toast.makeText(this, "M-Pesa code saved to clipboard", Toast.LENGTH_SHORT).show()

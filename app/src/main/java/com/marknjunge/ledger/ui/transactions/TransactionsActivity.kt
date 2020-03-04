@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.base.BaseActivity
-import com.marknjunge.ledger.ui.detail.TransactionActivity
+import com.marknjunge.ledger.ui.transactionDetail.TransactionDetailActivity
 import com.marknjunge.ledger.utils.*
 import kotlinx.android.synthetic.main.activity_transactions.*
 import org.koin.android.ext.android.inject
@@ -94,7 +94,7 @@ class TransactionsActivity : BaseActivity() {
         rvTranasctions.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
 
         transactionsAdapter = PagedTransactionsAdapter(this) { message ->
-            TransactionActivity.start(this, message)
+            TransactionDetailActivity.start(this, message)
         }
         rvTranasctions.adapter = transactionsAdapter
     }
