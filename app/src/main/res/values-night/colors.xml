@@ -9,6 +9,8 @@
     <color name="colorWindowBackground">#121319</color>
     <color name="colorActionBarBackground">#14161E</color>
 
+    <color name="colorSnackbarBackground">#1B1E28</color>
+
     <color name="colorTextPrimary">#E2E2E3</color>
     <color name="colorTextSecondary">#9E9FA8</color>
 

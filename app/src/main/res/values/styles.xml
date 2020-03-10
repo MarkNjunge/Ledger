@@ -10,6 +10,8 @@
         <item name="android:fontFamily">@font/rubik</item>
         <item name="android:windowBackground">@color/colorWindowBackground</item>
         <item name="actionBarStyle">@style/AppTheme.ActionBarStyle</item>
+        <item name="snackbarStyle">@style/AppTheme.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/AppTheme.Snackbar.Text</item>
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -42,5 +44,13 @@
 
     <style name="AppTheme.InputField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 
+    </style>
+
+    <style name="AppTheme.Snackbar" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">@color/colorSnackbarBackground</item>
+    </style>
+
+    <style name="AppTheme.Snackbar.Text" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/colorSnackbarText</item>
     </style>
 </resources>
