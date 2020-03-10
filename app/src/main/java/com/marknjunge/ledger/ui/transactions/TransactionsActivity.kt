@@ -70,7 +70,7 @@ class TransactionsActivity : BaseActivity() {
 //            })
 //        }
 
-        showExportPrompt()
+        showFilterPrompt()
     }
 
     override fun onBackPressed() {
@@ -181,6 +181,33 @@ class TransactionsActivity : BaseActivity() {
         })
     }
 
+    private fun showFilterPrompt() {
+        Handler().postDelayed({
+            if (!appPreferences.hasSeenFilterPrompt) {
+                MaterialTapTargetPrompt.Builder(this)
+                        .setTarget(R.id.menu_filter)
+                        .setPrimaryText("Filter")
+                        .setSecondaryText("You can filter your transactions by text and date")
+                        .setIcon(R.drawable.ic_filter)
+                        .setBackgroundColour(ContextCompat.getColor(this, R.color.colorActionBarBackground))
+                        .setPrimaryTextColour(Color.WHITE)
+                        .setSecondaryTextColour(Color.WHITE)
+                        .setCaptureTouchEventOutsidePrompt(true)
+                        .setIconDrawableTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorPrimary)))
+                        .setPromptStateChangeListener { _, state ->
+                            if (state == MaterialTapTargetPrompt.STATE_DISMISSED) {
+                                showExportPrompt()
+                            }
+                        }
+                        .show()
+
+                appPreferences.hasSeenFilterPrompt = true
+            } else {
+                showExportPrompt()
+            }
+        }, 1000)
+    }
+
     private fun showExportPrompt() {
         Handler().postDelayed({
             if (!appPreferences.hasSeenExportPrompt) {
@@ -198,7 +225,7 @@ class TransactionsActivity : BaseActivity() {
 
                 appPreferences.hasSeenExportPrompt = true
             }
-        }, 1000)
+        }, 100)
     }
 
     private fun exportAsCsv() {
