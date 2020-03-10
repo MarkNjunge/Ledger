@@ -53,23 +53,6 @@ class TransactionsActivity : BaseActivity() {
         initializeRecyclerView()
         getMessages()
 
-//        etSearch.onTextChanged {
-//            val term = etSearch.trimmedText
-//            if (term.isNotEmpty()) {
-//                search(term)
-//            } else {
-//                getMessages()
-//            }
-//        }
-
-//        FilterModel(this, etSearch, tvStartDate, tvEndDate, btnApply, btnClear) { query ->
-//            transactionsViewModel.filter(query).observe(this, Observer { items ->
-//                sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-//                transactionsAdapter.submitList(items)
-//                rvTranasctions.smoothScrollToPosition(0)
-//            })
-//        }
-
         showFilterPrompt()
     }
 
