@@ -2,6 +2,7 @@ package com.marknjunge.ledger.data.models
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
+import androidx.paging.DataSource
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.utils.DateTime
 import kotlinx.android.parcel.Parcelize
@@ -15,14 +16,14 @@ import java.lang.Exception
  */
 @Parcelize
 data class MpesaMessage(
-    val body: String,
-    val code: String,
-    val transactionType: TransactionType,
-    val amount: Double,
-    val accountNumber: String?,
-    val transactionDate: Long,
-    val balance: Double,
-    val transactionCost: Double
+        val body: String,
+        val code: String,
+        val transactionType: TransactionType,
+        val amount: Double,
+        val accountNumber: String?,
+        val transactionDate: Long,
+        val balance: Double,
+        val transactionCost: Double
 ) : Parcelable {
 
     companion object {
@@ -110,58 +111,58 @@ data class MpesaMessage(
                 val balance = when (transactionType) {
                     TransactionType.REVERSAL -> {
                         body.split("balance is Ksh")[1]
-                            .dropLast(1)
-                            .replace(",", "")
-                            .toDouble()
+                                .dropLast(1)
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.SEND -> {
                         body.split("balance is Ksh")[1]
-                            .split(". Transaction cost")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". Transaction cost")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.PAY_BILL -> {
                         body.split("balance is Ksh")[1]
-                            .split(". Transaction cost")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". Transaction cost")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.BUY_GOODS -> {
                         body.split("balance is Ksh")[1]
-                            .split(". Transaction cost")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". Transaction cost")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.WITHDRAW -> {
                         body.split("balance is Ksh")[1]
-                            .split(". Transaction cost")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". Transaction cost")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.RECEIVE -> {
                         body.split("balance is Ksh")[1]
-                            .split(". ")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". ")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.AIRTIME -> {
                         body.split("balance is Ksh")[1]
-                            .split(". Transaction cost")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(". Transaction cost")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> {
                         body.split("balance was  Ksh")[1]
-                            .split("  on")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split("  on")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.DEPOSIT -> {
                         body.split("balance is Ksh")[1]
-                            .split(".")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(".")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.UNKNOWN -> 0.0
                 }
@@ -172,34 +173,34 @@ data class MpesaMessage(
                     }
                     TransactionType.SEND -> {
                         body.split("Transaction cost, Ksh")[1]
-                            .split(".")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(".")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.PAY_BILL -> {
                         body.split("Transaction cost, Ksh")[1]
-                            .dropLast(1)
-                            .replace(",", "")
-                            .toDouble()
+                                .dropLast(1)
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.BUY_GOODS -> {
                         body.split("Transaction cost, Ksh")[1]
-                            .dropLast(1)
-                            .replace(",", "")
-                            .toDouble()
+                                .dropLast(1)
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.WITHDRAW -> {
                         body.split("Transaction cost, Ksh")[1]
-                            .dropLast(1)
-                            .replace(",", "")
-                            .toDouble()
+                                .dropLast(1)
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.RECEIVE -> 0.0
                     TransactionType.AIRTIME -> {
                         body.split("Transaction cost, Ksh")[1]
-                            .split(".")[0]
-                            .replace(",", "")
-                            .toDouble()
+                                .split(".")[0]
+                                .replace(",", "")
+                                .toDouble()
                     }
                     TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> 0.0
@@ -208,14 +209,14 @@ data class MpesaMessage(
                 }
 
                 return MpesaMessage(
-                    body,
-                    code,
-                    transactionType,
-                    amount,
-                    accountNumber,
-                    transationDate,
-                    balance,
-                    transactionCost
+                        body,
+                        code,
+                        transactionType,
+                        amount,
+                        accountNumber,
+                        transationDate,
+                        balance,
+                        transactionCost
                 )
             } catch (e: Exception) {
                 Timber.e("Error parsing message: $body")
@@ -223,6 +224,32 @@ data class MpesaMessage(
                 throw e
             }
         }
+
+        fun fromEntity(entity: MpesaMessageEntity) = MpesaMessage(
+                entity.body,
+                entity.code,
+                entity.transactionType,
+                entity.amount,
+                entity.accountNumber,
+                entity.transactionDate,
+                entity.balance,
+                entity.transactionCost
+        )
     }
 
+    fun toEntity() = MpesaMessageEntity(
+            0,
+            code,
+            transactionType,
+            amount,
+            accountNumber,
+            transactionDate,
+            balance,
+            transactionCost,
+            body
+    )
 }
+
+fun List<MpesaMessageEntity>.toMessages() = this.map { MpesaMessage.fromEntity(it) }
+
+fun DataSource.Factory<Int, MpesaMessageEntity>.toMessages() = this.map { MpesaMessage.fromEntity(it) }

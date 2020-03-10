@@ -16,13 +16,13 @@ class TransactionsViewModel(private val messagesRepository: MessagesRepository) 
     private var filter:Pair<String, Array<String>>? = null
 
     fun getPagedMessages(): LiveData<PagedList<MpesaMessage>> {
-        return messagesRepository.getPagedMessages()
+        return messagesRepository.getMessagesPaged()
     }
 
     fun filter(search: String, startDate: DateTime?, endDate: DateTime?): LiveData<PagedList<MpesaMessage>> {
         return if (search.isBlank() && startDate == null && endDate == null) {
             filter = null
-            messagesRepository.getPagedMessages()
+            messagesRepository.getMessagesPaged()
         } else {
             val query = generateQuery(search, startDate, endDate)
             filter = query
