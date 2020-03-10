@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.marknjunge.ledger.data.local.MessagesDao
 import com.marknjunge.ledger.data.local.SmsHelper
@@ -23,6 +24,10 @@ interface MessagesRepository {
     fun search(term: String): LiveData<PagedList<MpesaMessage>>
 
     suspend fun getMessagesGrouped(): List<MessageGroup>
+
+    suspend fun getFilteredMessages(query: String, params: Array<String>): List<MpesaMessage>
+
+    fun getFilteredMessagesPaged(query: String, params: Array<String>): LiveData<PagedList<MpesaMessage>>
 }
 
 class MessagesRepositoryImpl(
@@ -117,6 +122,38 @@ class MessagesRepositoryImpl(
         return withContext(Dispatchers.IO) {
             groupByDate(getMessages())
         }
+    }
+
+    override suspend fun getFilteredMessages(query: String, params: Array<String>): List<MpesaMessage> {
+        val q = SimpleSQLiteQuery(query, params)
+        return messagesDao.filter(q).map {
+            MpesaMessage(
+                    it.body,
+                    it.code,
+                    it.transactionType,
+                    it.amount,
+                    it.accountNumber,
+                    it.transactionDate,
+                    it.balance,
+                    it.transactionCost
+            )
+        }
+    }
+
+    override fun getFilteredMessagesPaged(query: String, params: Array<String>): LiveData<PagedList<MpesaMessage>> {
+        val q = SimpleSQLiteQuery(query, params)
+        return messagesDao.filterPaged(q).map {
+            MpesaMessage(
+                it.body,
+                it.code,
+                it.transactionType,
+                it.amount,
+                it.accountNumber,
+                it.transactionDate,
+                it.balance,
+                it.transactionCost
+            )
+        }.toLiveData(30)
     }
 
     @SuppressLint("UseSparseArrays")

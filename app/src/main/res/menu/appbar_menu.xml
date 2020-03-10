@@ -18,6 +18,13 @@
         app:showAsAction="always"
         tools:visible="true" />
     <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="Filter"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:visible="true" />
+    <item
         android:id="@+id/menu_export"
         android:icon="@drawable/ic_export"
         android:title="Export as CSV"
