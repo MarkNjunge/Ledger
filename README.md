@@ -10,7 +10,7 @@ Ledger works by reading M-Pesa messages and extracting key data from them.
 
 - Get balance
 - View all M-Pesa transactions
-- Search
+- Filter by text and/or date.
 - Export as CSV
 
 ## Download
