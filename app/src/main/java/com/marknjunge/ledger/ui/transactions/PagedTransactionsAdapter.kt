@@ -43,7 +43,11 @@ class PagedTransactionsAdapter(
             val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format(dateFormat)
             tvTransactionDate.text = time
 
-            val transactionSign = if (mpesaMessage.transactionType.positive == true) "+" else "-"
+            val transactionSign = when (mpesaMessage.transactionType.positive) {
+                true -> "+"
+                false -> "-"
+                null -> ""
+            }
             tvTransactionAmount.text = "$transactionSign ${CurrencyFormatter.format(mpesaMessage.amount)}"
             mpesaMessage.transactionType.positive?.let {
                 val color = if (it) {

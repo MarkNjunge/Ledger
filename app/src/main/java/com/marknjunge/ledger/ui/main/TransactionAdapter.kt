@@ -47,11 +47,15 @@ class TransactionAdapter(private val context: Context, private val onClick: (Mpe
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
             tvTransactionAccount.text = mpesaMessage.accountNumber ?: mpesaMessage.transactionType.string()
 
-            val dateFormat = if(DateUtils.isToday(mpesaMessage.transactionDate)) "HH:mm a" else "EEEE, d MMMM"
+            val dateFormat = if (DateUtils.isToday(mpesaMessage.transactionDate)) "HH:mm a" else "EEEE, d MMMM"
             val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format(dateFormat)
             tvTransactionDate.text = time
 
-            val transactionSign = if (mpesaMessage.transactionType.positive == true) "+" else "-"
+            val transactionSign = when (mpesaMessage.transactionType.positive) {
+                true -> "+"
+                false -> "-"
+                null -> ""
+            }
             tvTransactionAmount.text = "$transactionSign ${CurrencyFormatter.format(mpesaMessage.amount)}"
             mpesaMessage.transactionType.positive?.let {
                 val color = if (it) {

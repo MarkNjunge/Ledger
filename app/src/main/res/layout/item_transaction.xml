@@ -30,7 +30,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/colorPositiveValue"
+        android:textColor="@color/colorTextPrimary"
         tools:text="+ Ksh 2,700.00" />
 
     <TextView
