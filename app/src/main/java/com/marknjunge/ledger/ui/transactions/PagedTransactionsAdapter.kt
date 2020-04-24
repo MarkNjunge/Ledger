@@ -49,14 +49,12 @@ class PagedTransactionsAdapter(
                 null -> ""
             }
             tvTransactionAmount.text = "$transactionSign ${CurrencyFormatter.format(mpesaMessage.amount)}"
-            mpesaMessage.transactionType.positive?.let {
-                val color = if (it) {
-                    ContextCompat.getColor(context, R.color.colorPositiveValue)
-                } else {
-                    ContextCompat.getColor(context, R.color.colorNegativeValue)
-                }
-                tvTransactionAmount.setTextColor(color)
+            val color = when (mpesaMessage.transactionType.positive) {
+                true -> ContextCompat.getColor(context, R.color.colorPositiveValue)
+                false -> ContextCompat.getColor(context, R.color.colorNegativeValue)
+                null -> ContextCompat.getColor(context, R.color.colorTextPrimary)
             }
+            tvTransactionAmount.setTextColor(color)
             rootTransaction.setOnClickListener { onClick(mpesaMessage) }
         }
     }
