@@ -1,10 +1,12 @@
 package com.marknjunge.ledger.utils
 
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.data.local.AppPreferences
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 
 class AppUpdateTest {
@@ -12,13 +14,23 @@ class AppUpdateTest {
     @MockK
     private val appPreferences = mockk<AppPreferences>()
 
+    @MockK
+    private val remoteConfig = mockk<FirebaseRemoteConfig>()
+
+    private lateinit var appUpdate: AppUpdate
+
+    @Before
+    fun setup(){
+        appUpdate = AppUpdateImpl(remoteConfig, appPreferences)
+    }
+
     @Test
     fun `current 1, latest 1`() {
         every { appPreferences.currentVersion } returns 1
         every { appPreferences.latestVersion } returns 1
         every { appPreferences.skipUpdateVer } returns 1
 
-        val shouldUpdate = AppUpdate.shouldUpdate(appPreferences, false)
+        val shouldUpdate = appUpdate.shouldUpdate(false)
         Assert.assertEquals(false, shouldUpdate)
     }
 
@@ -28,7 +40,7 @@ class AppUpdateTest {
         every { appPreferences.latestVersion } returns 2
         every { appPreferences.skipUpdateVer } returns 1
 
-        val shouldUpdate = AppUpdate.shouldUpdate(appPreferences, false)
+        val shouldUpdate = appUpdate.shouldUpdate(false)
         Assert.assertEquals(true, shouldUpdate)
     }
 
@@ -38,7 +50,7 @@ class AppUpdateTest {
         every { appPreferences.latestVersion } returns 2
         every { appPreferences.skipUpdateVer } returns 1
 
-        val shouldUpdate = AppUpdate.shouldUpdate(appPreferences, true)
+        val shouldUpdate = appUpdate.shouldUpdate(true)
         Assert.assertEquals(true, shouldUpdate)
     }
 
@@ -48,7 +60,7 @@ class AppUpdateTest {
         every { appPreferences.latestVersion } returns 2
         every { appPreferences.skipUpdateVer } returns 2
 
-        val shouldUpdate = AppUpdate.shouldUpdate(appPreferences, false)
+        val shouldUpdate = appUpdate.shouldUpdate(false)
         Assert.assertEquals(false, shouldUpdate)
     }
 
@@ -58,7 +70,7 @@ class AppUpdateTest {
         every { appPreferences.latestVersion } returns 2
         every { appPreferences.skipUpdateVer } returns 2
 
-        val shouldUpdate = AppUpdate.shouldUpdate(appPreferences, true)
+        val shouldUpdate = appUpdate.shouldUpdate(true)
         Assert.assertEquals(true, shouldUpdate)
     }
 }

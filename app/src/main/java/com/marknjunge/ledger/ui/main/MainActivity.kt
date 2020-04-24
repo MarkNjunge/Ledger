@@ -26,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : BaseActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val appPreferences: AppPreferences by inject()
-    private val remoteConfig: FirebaseRemoteConfig by inject()
+    private val appUpdate: AppUpdate by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,19 +74,19 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkForUpdate() {
-        AppUpdate.getLatestVersion(remoteConfig, appPreferences) {
-            if (AppUpdate.shouldUpdate(appPreferences, false)) {
-                showAppUpdateDialog(appPreferences.latestVersion)
+        appUpdate.getLatestVersion { version, url ->
+            if (appUpdate.shouldUpdate(false)) {
+                showAppUpdateDialog(version, url)
             }
         }
     }
 
-    private fun showAppUpdateDialog(latestVersion: Int) {
+    private fun showAppUpdateDialog(latestVersion: Int, url: String) {
         MaterialAlertDialogBuilder(this)
             .setTitle("Update available")
             .setMessage("An update is available for Ledger!")
             .setPositiveButton("Download") { _, _ ->
-                openUrlInCustomTab("https://github.com/MarkNjunge/Ledger/releases")
+                openUrlInCustomTab(url)
             }
             .setNegativeButton("Cancel") { _, _ -> }
             .setNeutralButton("Skip") { _, _ ->

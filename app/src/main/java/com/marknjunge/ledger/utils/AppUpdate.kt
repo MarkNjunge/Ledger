@@ -6,27 +6,36 @@ import com.marknjunge.ledger.data.local.AppPreferences
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-object AppUpdate : KoinComponent {
-    fun getLatestVersion(
-        remoteConfig: FirebaseRemoteConfig,
-        appPreferences: AppPreferences,
-        onComplete: (version: Int) -> Unit
-    ) {
-        val fetchInterval = if (BuildConfig.DEBUG) 0L else 3600L
+interface AppUpdate {
+    fun getLatestVersion(onComplete: (version: Int, url: String) -> Unit)
+
+    fun shouldUpdate(ignoreSkip: Boolean): Boolean
+}
+
+class AppUpdateImpl(
+    private val remoteConfig: FirebaseRemoteConfig,
+    private val appPreferences: AppPreferences
+) : AppUpdate {
+    private val fetchInterval = if (BuildConfig.DEBUG) 0L else 3600L
+
+    override fun getLatestVersion(onComplete: (version: Int, url: String) -> Unit) {
         remoteConfig.fetch(fetchInterval)
             .addOnSuccessListener {
                 remoteConfig.activate()
                 val latestVersion = remoteConfig.getString("latest_version").toInt()
+                val latestVersionUrl = remoteConfig.getString("latest_version_url")
                 appPreferences.latestVersion = latestVersion
-                onComplete(latestVersion)
+                onComplete(latestVersion, latestVersionUrl)
             }
             .addOnFailureListener { e ->
                 Timber.e(e.message)
-                onComplete(appPreferences.latestVersion)
+                val latestVersionUrl = remoteConfig.getString("latest_version_url")
+                onComplete(appPreferences.latestVersion, latestVersionUrl)
             }
     }
 
-    fun shouldUpdate(appPreferences: AppPreferences, ignoreSkip: Boolean): Boolean {
+
+    override fun shouldUpdate(ignoreSkip: Boolean): Boolean {
         return if (ignoreSkip) {
             appPreferences.currentVersion < appPreferences.latestVersion
         } else {

@@ -4,4 +4,8 @@
         <key>latest_version</key>
         <value>0</value>
     </entry>
+    <entry>
+        <key>latest_version_url</key>
+        <value>https://github.com/MarkNjunge/Ledger/releases</value>
+    </entry>
 </defaultsMap>

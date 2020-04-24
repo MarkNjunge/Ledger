@@ -11,6 +11,8 @@ import com.marknjunge.ledger.data.repository.MessagesRepositoryImpl
 import com.marknjunge.ledger.data.local.SmsHelper
 import com.marknjunge.ledger.ui.main.MainViewModel
 import com.marknjunge.ledger.ui.transactions.TransactionsViewModel
+import com.marknjunge.ledger.utils.AppUpdate
+import com.marknjunge.ledger.utils.AppUpdateImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +25,7 @@ val appModule = module {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig
     }
+    single<AppUpdate> { AppUpdateImpl(get(), get()) }
 
     single { Room.databaseBuilder(androidContext(), AppDatabase::class.java, "ledger-db").build() }
     single { get<AppDatabase>().messagesDao() }

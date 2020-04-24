@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.marknjunge.ledger.R
-import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.settings.SettingsActivity
-import com.marknjunge.ledger.ui.transactions.TransactionsActivity
 import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.openUrlInCustomTab
 import org.koin.android.ext.android.inject
@@ -16,7 +14,7 @@ import org.koin.android.ext.android.inject
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
-    private val appPreferences: AppPreferences by inject()
+    private val appUpdate: AppUpdate by inject()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_menu, menu)
@@ -26,7 +24,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         super.onPrepareOptionsMenu(menu)
 
-        menu?.findItem(R.id.menu_update)?.isVisible = AppUpdate.shouldUpdate(appPreferences, true)
+        menu?.findItem(R.id.menu_update)?.isVisible = appUpdate.shouldUpdate(true)
 
         return true
     }
