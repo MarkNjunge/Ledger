@@ -39,7 +39,7 @@ class PagedTransactionsAdapter(
         fun bind(context: Context, mpesaMessage: MpesaMessage, onClick: (MpesaMessage) -> Unit) = with(itemView) {
             tvTransactionAccount.text = mpesaMessage.accountNumber ?: mpesaMessage.transactionType.string()
 
-            val dateFormat = if (DateUtils.isToday(mpesaMessage.transactionDate)) "HH:mm a" else "EEEE, d MMMM"
+            val dateFormat = if (DateUtils.isToday(mpesaMessage.transactionDate)) "HH:mm a" else "EEEE, d MMMM yyyy"
             val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format(dateFormat)
             tvTransactionDate.text = time
 

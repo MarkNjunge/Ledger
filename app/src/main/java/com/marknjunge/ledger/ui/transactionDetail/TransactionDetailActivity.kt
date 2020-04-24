@@ -50,7 +50,7 @@ class TransactionDetailActivity : BaseActivity() {
         tvMessageBody.text = mpesaMessage.body
         tvTransactionType.text = mpesaMessage.transactionType.string()
 
-        val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format("HH:mm a EEEE, d MMMM")
+        val time = DateTime.fromTimestamp(mpesaMessage.transactionDate).format("HH:mm a EEEE, d MMMM yyyy")
         tvTransactionDate.text = time
 
         val transactionSign = if (mpesaMessage.transactionType.positive == true) "+" else "-"
