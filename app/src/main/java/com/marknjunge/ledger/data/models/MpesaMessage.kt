@@ -115,6 +115,7 @@ data class MpesaMessage(
                     TransactionType.UNKNOWN -> 0
                 }
 
+                val priceRegex = Regex("\\d*[.]\\d*")
                 val balance = when (transactionType) {
                     TransactionType.REVERSAL -> {
                         body.split("balance is Ksh")[1]
@@ -166,10 +167,8 @@ data class MpesaMessage(
                                 .toDouble()
                     }
                     TransactionType.DEPOSIT -> {
-                        body.split("balance is Ksh")[1]
-                                .split(".")[0]
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("balance is Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.FULIZA_PAY -> {
                         body.split("balance is Ksh")[1]
@@ -187,35 +186,25 @@ data class MpesaMessage(
                         0.0
                     }
                     TransactionType.SEND -> {
-                        body.split("Transaction cost, Ksh")[1]
-                                .split(".")[0]
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("Transaction cost, Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.PAY_BILL -> {
-                        body.split("Transaction cost, Ksh")[1]
-                                .dropLast(1)
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("Transaction cost, Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.BUY_GOODS -> {
-                        body.split("Transaction cost, Ksh")[1]
-                                .dropLast(1)
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("Transaction cost, Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.WITHDRAW -> {
-                        body.split("Transaction cost, Ksh")[1]
-                                .dropLast(1)
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("Transaction cost, Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.RECEIVE -> 0.0
                     TransactionType.AIRTIME -> {
-                        body.split("Transaction cost, Ksh")[1]
-                                .split(".")[0]
-                                .replace(",", "")
-                                .toDouble()
+                        val amt = body.split("Transaction cost, Ksh")[1].replace(",", "")
+                        priceRegex.find(amt)!!.groupValues[0].toDouble()
                     }
                     TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> 0.0
