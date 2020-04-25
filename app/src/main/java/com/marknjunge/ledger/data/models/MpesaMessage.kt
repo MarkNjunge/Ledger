@@ -32,11 +32,9 @@ data class MpesaMessage(
         fun create(body: String, date: Long? = null): MpesaMessage {
             try {
                 val code = body
+                    .replace("Congratulations! ", "")
                     .replace("\n", " ")
                     .split(Regex("( [Cc]onfirmed)"))[0]
-                    .reversed()
-                    .split(" ")[0]
-                    .reversed()
 
                 val bodyLowerCase = body.toLowerCase()
 
