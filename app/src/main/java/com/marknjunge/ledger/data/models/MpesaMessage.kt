@@ -23,7 +23,7 @@ data class MpesaMessage(
         val amount: Double,
         val accountNumber: String?,
         val transactionDate: Long,
-        val balance: Double,
+        val balance: Double?,
         val transactionCost: Double
 ) : Parcelable {
 
@@ -159,7 +159,7 @@ data class MpesaMessage(
                                 .replace(",", "")
                                 .toDouble()
                     }
-                    TransactionType.AIRTIME_RECEIVE -> 0.0
+                    TransactionType.AIRTIME_RECEIVE -> null
                     TransactionType.BALANCE -> {
                         body.split("balance was  Ksh")[1]
                                 .split("  on")[0]

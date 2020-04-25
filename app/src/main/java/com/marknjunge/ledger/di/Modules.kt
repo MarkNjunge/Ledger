@@ -27,7 +27,11 @@ val appModule = module {
     }
     single<AppUpdate> { AppUpdateImpl(get(), get()) }
 
-    single { Room.databaseBuilder(androidContext(), AppDatabase::class.java, "ledger-db").build() }
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "ledger-db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
     single { get<AppDatabase>().messagesDao() }
 
     single<MessagesRepository> { MessagesRepositoryImpl(get(), get()) }

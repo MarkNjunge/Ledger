@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.marknjunge.ledger.data.models.MpesaMessage
 import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.ui.base.BaseActivity
@@ -61,7 +61,7 @@ class MainActivity : BaseActivity() {
 
         viewModel.groupedMessages.observe(this, Observer { items ->
             if (items.isNotEmpty()) {
-                tvBalance.text = CurrencyFormatter.format(items.first().balance)
+                tvBalance.text = CurrencyFormatter.format(getBalance(items, 0))
                 adapter.setItems(items.take(4))
                 TransitionManager.beginDelayedTransition(rootMainActivity)
                 contentMainActivity.visibility = View.VISIBLE
@@ -94,6 +94,10 @@ class MainActivity : BaseActivity() {
             }
             .show()
 
+    }
+
+    private fun getBalance(messages: List<MpesaMessage>, index: Int): Double {
+        return messages[index].balance ?: getBalance(messages, index + 1)
     }
 
 }

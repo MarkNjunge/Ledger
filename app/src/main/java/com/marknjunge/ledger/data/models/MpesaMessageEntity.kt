@@ -24,7 +24,7 @@ data class MpesaMessageEntity(
     val transactionDate: Long,
 
     @ColumnInfo(name = "balance")
-    val balance: Double,
+    val balance: Double?,
 
     @ColumnInfo(name = "transaction_cost")
     val transactionCost: Double,
