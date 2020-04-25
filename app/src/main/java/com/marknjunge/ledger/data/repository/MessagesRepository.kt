@@ -10,6 +10,7 @@ import com.marknjunge.ledger.data.local.MessagesDao
 import com.marknjunge.ledger.data.local.SmsHelper
 import com.marknjunge.ledger.data.models.MessageGroup
 import com.marknjunge.ledger.data.models.MpesaMessage
+import com.marknjunge.ledger.data.models.exception.MessageParseException
 import com.marknjunge.ledger.data.models.toMessages
 import com.marknjunge.ledger.utils.DateTime
 import timber.log.Timber
@@ -56,6 +57,9 @@ class MessagesRepositoryImpl(
                 val mpesaMessage = MpesaMessage.create(message.body)
                 messagesDao.insert(mpesaMessage.toEntity())
             } catch (e: Exception) {
+                if (e is MessageParseException) {
+                    FirebaseCrashlytics.getInstance().log(e.body)
+                }
                 FirebaseCrashlytics.getInstance().recordException(e)
             }
         }

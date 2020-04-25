@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.paging.DataSource
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.marknjunge.ledger.data.models.exception.MessageParseException
 import com.marknjunge.ledger.utils.DateTime
 import kotlinx.android.parcel.Parcelize
 import timber.log.Timber
@@ -28,7 +29,7 @@ data class MpesaMessage(
 
     companion object {
         @SuppressLint("DefaultLocale")
-        fun create(body: String): MpesaMessage {
+        fun create(body: String, date: Long? = null): MpesaMessage {
             try {
                 val code = body.split(Regex("( [Cc]onfirmed)"))[0].reversed().split(" ")[0].reversed()
 
@@ -220,8 +221,7 @@ data class MpesaMessage(
                 )
             } catch (e: Exception) {
                 Timber.e("Error parsing message: $body")
-                FirebaseCrashlytics.getInstance().log(body)
-                throw e
+                throw MessageParseException(e.message ?: "Failed to parse message", body)
             }
         }
 
