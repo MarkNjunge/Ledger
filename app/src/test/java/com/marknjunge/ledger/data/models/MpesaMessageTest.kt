@@ -58,6 +58,11 @@ class MpesaMessageTest {
                 "Supermarket New M-PESA balance is Ksh1,338.00."
     )
 
+    private val fulizaPay = MpesaMessage.create("ODF7I6HADN\n" +
+            "Confirmed. Ksh 488.43 from your M-PESA has been used to fully pay your outstanding Fuliza M-PESA. " +
+            "Available Fuliza M-PESA limit is Ksh 500.00. M-PESA balance is Ksh539.57.", 1587803235
+    )
+
     @Before
     fun setup(){
         // Tests are configured based on GMT +3
@@ -78,6 +83,7 @@ class MpesaMessageTest {
         Assert.assertEquals("NKP47NVJCW", airtimeReceive.code)
         Assert.assertEquals("NI51DSRDGJ", balanceMsg.code)
         Assert.assertEquals("DQ94ZE762", depositMsg.code)
+        Assert.assertEquals("ODF7I6HADN", fulizaPay.code)
     }
 
     @Test
@@ -93,6 +99,7 @@ class MpesaMessageTest {
         Assert.assertEquals(TransactionType.AIRTIME_RECEIVE, airtimeReceive.transactionType)
         Assert.assertEquals(TransactionType.BALANCE, balanceMsg.transactionType)
         Assert.assertEquals(TransactionType.DEPOSIT, depositMsg.transactionType)
+        Assert.assertEquals(TransactionType.FULIZA_PAY, fulizaPay.transactionType)
     }
 
     @Test
@@ -108,6 +115,7 @@ class MpesaMessageTest {
         Assert.assertEquals(100.0, airtimeReceive.amount, 0.0)
         Assert.assertEquals(2992.98, balanceMsg.amount, 0.0)
         Assert.assertEquals(1000.0, depositMsg.amount, 0.0)
+        Assert.assertEquals(488.43, fulizaPay.amount, 0.0)
     }
 
     @Test
@@ -126,6 +134,7 @@ class MpesaMessageTest {
         Assert.assertEquals("Upward Ltd Centre", airtimeReceive.accountNumber)
         Assert.assertEquals(null, balanceMsg.accountNumber)
         Assert.assertEquals("Digital Africa Services Jolet Supermarket", depositMsg.accountNumber)
+        Assert.assertEquals(null, fulizaPay.accountNumber)
     }
 
     @Test
@@ -141,6 +150,7 @@ class MpesaMessageTest {
         Assert.assertEquals(1574673840, airtimeReceive.transactionDate)
         Assert.assertEquals(1567665300, balanceMsg.transactionDate)
         Assert.assertEquals(1372831620, depositMsg.transactionDate)
+        Assert.assertEquals(1587803235, fulizaPay.transactionDate)
     }
 
     @Test
@@ -156,6 +166,7 @@ class MpesaMessageTest {
         Assert.assertEquals(0.0, airtimeReceive.balance, 0.0)
         Assert.assertEquals(2992.98, balanceMsg.balance, 0.0)
         Assert.assertEquals(1338.00, depositMsg.balance, 0.0)
+        Assert.assertEquals(539.57, fulizaPay.balance, 0.0)
     }
 
     @Test
@@ -171,6 +182,7 @@ class MpesaMessageTest {
         Assert.assertEquals(0.0, airtimeReceive.transactionCost, 0.0)
         Assert.assertEquals(0.0, balanceMsg.transactionCost, 0.0)
         Assert.assertEquals(0.00, depositMsg.transactionCost, 0.0)
+        Assert.assertEquals(0.00, fulizaPay.transactionCost, 0.0)
     }
 
 }

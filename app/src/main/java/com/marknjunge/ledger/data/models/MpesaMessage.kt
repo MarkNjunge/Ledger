@@ -31,7 +31,12 @@ data class MpesaMessage(
         @SuppressLint("DefaultLocale")
         fun create(body: String, date: Long? = null): MpesaMessage {
             try {
-                val code = body.split(Regex("( [Cc]onfirmed)"))[0].reversed().split(" ")[0].reversed()
+                val code = body
+                    .replace("\n", " ")
+                    .split(Regex("( [Cc]onfirmed)"))[0]
+                    .reversed()
+                    .split(" ")[0]
+                    .reversed()
 
                 val bodyLowerCase = body.toLowerCase()
 
@@ -46,10 +51,11 @@ data class MpesaMessage(
                     bodyLowerCase.contains(Regex("(.*) received airtime (.*)")) -> TransactionType.AIRTIME_RECEIVE
                     bodyLowerCase.contains(Regex("(.*)your m-pesa balance (.*)")) -> TransactionType.BALANCE
                     bodyLowerCase.contains(Regex("(.*) give (.*)")) -> TransactionType.DEPOSIT
+                    bodyLowerCase.contains(Regex("has been used to (.*) pay your (.*) fuliza")) -> TransactionType.FULIZA_PAY
                     else -> TransactionType.UNKNOWN
                 }
 
-                val amount = body.split("Ksh")[1].split(" ")[0].replace(",", "").toDouble()
+                val amount = body.split("Ksh")[1].trim().split(" ")[0].replace(",", "").toDouble()
 
                 val accountNumber = when (transactionType) {
                     TransactionType.REVERSAL -> null
@@ -62,6 +68,7 @@ data class MpesaMessage(
                     TransactionType.AIRTIME_RECEIVE -> body.split("from ")[1].split(" on")[0]
                     TransactionType.BALANCE -> null
                     TransactionType.DEPOSIT -> body.split("to ")[1].split(" New")[0]
+                    TransactionType.FULIZA_PAY -> null
                     TransactionType.UNKNOWN -> null
                 }
 
@@ -106,6 +113,7 @@ data class MpesaMessage(
                         val source = bodyLowerCase.split(" on ")[1].split(" give")[0].replace("at", "")
                         DateTime.parse("d/M/yy  h:mm a", source).timestamp
                     }
+                    TransactionType.FULIZA_PAY -> date!!
                     TransactionType.UNKNOWN -> 0
                 }
 
@@ -165,6 +173,14 @@ data class MpesaMessage(
                                 .replace(",", "")
                                 .toDouble()
                     }
+                    TransactionType.FULIZA_PAY -> {
+                        body.split("balance is Ksh")[1]
+                            .reversed()
+                            .replaceFirst(".", "")
+                            .reversed()
+                            .replace(",", "")
+                            .toDouble()
+                    }
                     TransactionType.UNKNOWN -> 0.0
                 }
 
@@ -206,6 +222,7 @@ data class MpesaMessage(
                     TransactionType.AIRTIME_RECEIVE -> 0.0
                     TransactionType.BALANCE -> 0.0
                     TransactionType.DEPOSIT -> 0.0
+                    TransactionType.FULIZA_PAY -> 0.0
                     TransactionType.UNKNOWN -> 0.0
                 }
 

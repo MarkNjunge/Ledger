@@ -13,6 +13,7 @@ enum class TransactionType(val positive: Boolean?) {
     AIRTIME_RECEIVE(null),
     BALANCE(null),
     DEPOSIT(true),
+    FULIZA_PAY(false),
     UNKNOWN(null);
 
     @SuppressLint("DefaultLocale")
