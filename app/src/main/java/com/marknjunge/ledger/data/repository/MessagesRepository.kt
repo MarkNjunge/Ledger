@@ -41,21 +41,19 @@ class MessagesRepositoryImpl(
 
         var messages = smsHelper.getMpesaMessages()
         if (latest != null) {
-            // If there are already messages, sort the messages by date descending
-            // so that the so that the last saved one is arrived at quicker
+            // If there are already saved messages, sort the messages by date descending so that the last saved
+            // one is arrived at quicker
             messages = messages.sortedByDescending { it.date }
         }
 
-        var count = 0
+        val newMessages = mutableListOf<MpesaMessage>()
         for (message in messages) {
             if (latest != null && latest.body == message.body) {
                 break
             }
-            count++
 
             try {
-                val mpesaMessage = MpesaMessage.create(message.body)
-                messagesDao.insert(mpesaMessage.toEntity())
+                newMessages.add(MpesaMessage.create(message.body))
             } catch (e: Exception) {
                 if (e is MessageParseException) {
                     FirebaseCrashlytics.getInstance().log(e.body)
@@ -63,11 +61,12 @@ class MessagesRepositoryImpl(
                 FirebaseCrashlytics.getInstance().recordException(e)
             }
         }
-        Timber.d("Inserted $count new messages")
+
+        messagesDao.insertAll(newMessages.reversed().map { it.toEntity() })
+        Timber.d("Inserted ${newMessages.size} new messages")
     }
 
     override suspend fun getMessages(): List<MpesaMessage> {
-        fetchMessages()
         return messagesDao.getMessages().toMessages()
     }
 

@@ -10,6 +10,9 @@ interface MessagesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(mpesaMessageEntity: MpesaMessageEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: List<MpesaMessageEntity>)
+
     @Query("SELECT * from mpesa_messages ORDER BY transaction_date DESC LIMIT 1")
     suspend fun getLatestMessage(): MpesaMessageEntity?
 
