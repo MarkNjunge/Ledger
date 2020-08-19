@@ -40,74 +40,79 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/contentMainActivity"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Available Balance"
-            android:textColor="@color/colorTextSecondary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvBalance"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorTextPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:text="Ksh. 2,000.00" />
-
-        <TextView
-            android:id="@+id/textView4"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="Recent Transactions"
-            android:textColor="@color/colorTextSecondary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBalance" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGroups"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentMainActivity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:itemCount="4"
-            tools:listitem="@layout/item_transaction" />
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/tvSeeMore"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/rubik"
-            android:textColor="@color/colorTextPrimary"
-            android:padding="8dp"
-            android:text="See More"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvGroups" />
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Available Balance"
+                android:textColor="@color/colorTextSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvBalance"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorTextPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                tools:text="Ksh. 2,000.00" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="Recent Transactions"
+                android:textColor="@color/colorTextSecondary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBalance" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGroups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_transaction" />
+
+            <TextView
+                android:id="@+id/tvSeeMore"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/rubik"
+                android:padding="8dp"
+                android:text="See More"
+                android:textColor="@color/colorTextPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvGroups" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </FrameLayout>
