@@ -18,6 +18,7 @@ class MainViewModel(private val messagesRepository: MessagesRepository) : ViewMo
     fun getMessages() {
         viewModelScope.launch {
             _loading.value = true
+            messagesRepository.fetchMessages()
             _groupedMessages.value = messagesRepository.getMessages()
             _loading.value = false
         }

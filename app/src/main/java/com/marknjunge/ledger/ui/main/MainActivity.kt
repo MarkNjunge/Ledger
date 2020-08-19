@@ -35,13 +35,17 @@ class MainActivity : BaseActivity() {
         initializeLoading()
         initializeRecyclerView()
 
-        viewModel.getMessages()
 
         tvSeeMore.setOnClickListener {
             startActivity(Intent(this, TransactionsActivity::class.java))
         }
 
         checkForUpdate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getMessages()
     }
 
     private fun initializeLoading() {
