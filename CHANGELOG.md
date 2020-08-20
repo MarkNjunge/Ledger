@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0
+
+- Fix incorrect formatting for messages with no change in balance.
+- Update new version behaviour. The app now opens a url from Remote Config, instead of GitHub releases.
+- Fix incorrect color for balance messages.
+- Show transaction year in transactions list and detail screens.
+- Support Fuliza re-payment message.
+- Fix parsing cent value of prices.
+- Get balance from most recent message with balance, not just the first.
+- Fix incorrect order of new messages in db.
+- Fix scrolling in home screen.
+- Update transactions list more frequently.
+
 ## 1.1.0
 
 - Add filtering by text and/or date.
