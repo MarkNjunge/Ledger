@@ -119,9 +119,15 @@ class TransactionsActivity : BaseActivity() {
         sheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 viewScrim.alpha = slideOffset * 0.4f
+                if (slideOffset > 0.0f) {
+                    viewScrim.visibility = View.VISIBLE
+                } else {
+                    viewScrim.visibility = View.GONE
+                }
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
+
             }
         })
     }

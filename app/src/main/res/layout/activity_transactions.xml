@@ -24,7 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
+        android:clickable="true"
         android:background="#000"
+        android:visibility="gone"
         tools:alpha="0.4" />
 
     <include layout="@layout/layout_filter_sheet" />
