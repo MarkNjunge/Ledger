@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+
+- Update checking for new version
+- Prevent clicking scrim behind filter dialog
+
 ## 1.2.0
 
 - Fix incorrect formatting for messages with no change in balance.
