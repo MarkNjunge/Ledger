@@ -1,6 +1,5 @@
 package com.marknjunge.ledger.utils
 
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.marknjunge.ledger.data.local.AppPreferences
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -14,14 +13,11 @@ class AppUpdateTest {
     @MockK
     private val appPreferences = mockk<AppPreferences>()
 
-    @MockK
-    private val remoteConfig = mockk<FirebaseRemoteConfig>()
-
     private lateinit var appUpdate: AppUpdate
 
     @Before
     fun setup(){
-        appUpdate = AppUpdateImpl(remoteConfig, appPreferences)
+        appUpdate = AppUpdateImpl(appPreferences)
     }
 
     @Test
