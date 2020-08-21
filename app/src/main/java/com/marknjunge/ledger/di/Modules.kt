@@ -1,8 +1,6 @@
 package com.marknjunge.ledger.di
 
 import androidx.room.Room
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.marknjunge.ledger.R
 import com.marknjunge.ledger.data.local.AppDatabase
 import com.marknjunge.ledger.data.local.AppPreferences
 import com.marknjunge.ledger.data.local.AppPreferencesImpl
@@ -20,12 +18,7 @@ import org.koin.dsl.module
 val appModule = module {
     single { SmsHelper(androidContext()) }
     single<AppPreferences> { AppPreferencesImpl(androidContext()) }
-    single {
-        val remoteConfig = FirebaseRemoteConfig.getInstance()
-        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
-        remoteConfig
-    }
-    single<AppUpdate> { AppUpdateImpl(get(), get()) }
+    single<AppUpdate> { AppUpdateImpl(get()) }
 
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "ledger-db")

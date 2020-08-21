@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.marknjunge.ledger.utils.AppUpdate
 import com.marknjunge.ledger.utils.CurrencyFormatter
 import com.marknjunge.ledger.utils.openUrlInCustomTab
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -78,9 +80,12 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkForUpdate() {
-        appUpdate.getLatestVersion { version, url ->
-            if (appUpdate.shouldUpdate(false)) {
-                showAppUpdateDialog(version, url)
+        lifecycleScope.launch {
+            val updateDetail = appUpdate.getLatestVersion()
+            updateDetail?.let { update ->
+                if (appUpdate.shouldUpdate(false)) {
+                    showAppUpdateDialog(update.latestVersion, update.latestVersionUrl)
+                }
             }
         }
     }
